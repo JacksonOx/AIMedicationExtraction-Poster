@@ -1,8 +1,5 @@
-% IF YOU ARE USING OVERLEAF, MAKE SURE TO SET THE COMPILER TO XeLatex (Menu in the top left > Settings > Compiler).
-
-% Gemini theme
-% See: https://rev.cs.uchicago.edu/k4rtik/gemini-uccs
-% A fork of https://github.com/anishathalye/gemini
+% Compile with XeLaTeX
+% (Overleaf: Menu > Settings > Compiler > XeLaTeX)
 
 \documentclass[final]{beamer}
 
@@ -14,20 +11,33 @@
 \usepackage{lmodern}
 \usepackage[size=custom,width=120,height=72,scale=1.0]{beamerposter}
 \usetheme{gemini}
-% \usecolortheme{uchicago}
 \usecolortheme{stanford}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
+\usepackage{xcolor}
+
+% ====================
+% Stanford palette
+% ====================
+
+\definecolor{aiteal}{HTML}{1F6F7A}
+\definecolor{humancardinal}{HTML}{8C1515}
+\definecolor{bothgreen}{HTML}{4F9D69}
+\definecolor{erroramber}{HTML}{C8553D}
+\definecolor{slatecol}{HTML}{5B6B7B}
+\definecolor{inkblack}{HTML}{222629}
+\definecolor{lightgrey}{HTML}{9AA5B1}
 
 % ====================
 % Lengths
 % ====================
 
-% If you have N columns, choose \sepwidth and \colwidth such that
-% (N+1)*\sepwidth + N*\colwidth = \paperwidth
+% 3 columns: (3+1)*\sepwidth + 3*\colwidth = \paperwidth
+% => 4*0.025 + 3*0.3 = 0.1 + 0.9 = 1.0 checkmark
 \newlength{\sepwidth}
 \newlength{\colwidth}
 \setlength{\sepwidth}{0.025\paperwidth}
@@ -35,32 +45,21 @@
 
 \newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
 
-
-\title{Your Title Goes Here}
-
-
-\author{Rylan Schaeffer \inst{1} \and Ben Bitdiddle \inst{2} \and Lem E. Tweakit \inst{2}}
-
-\institute[shortinst]{\inst{1} Department of Computer Science}
-\institute[shortinst]{\inst{1} Computer Science, Stanford \samelineand \inst{2} Another Institute}
-
 % ====================
-% Footer (optional)
+% Title / author / footer
 % ====================
+
+\title{LLM Medication Extraction vs.\ Human Chart Abstraction\\
+       in Pediatric Immune Behavioral Health: A Single-Patient Pilot}
+
+\author{Jackson Oxner, B.A.}
+
+\institute[Stanford]{Stanford University}
 
 \footercontent{
-  \href{rylanschaeffer.github.io}{rylanschaeffer.github.io} \hfill
-  NeurIPS 2021 Workshop: Metacognition in the Age of AI \hfill
-  \href{mailto:rylanschaeffer@gmail.com}{rylanschaeffer@gmail.com}}
-% (can be left out to remove footer)
-
-% ====================
-% Logo (optional)
-% ====================
-
-% use this to include logos on the left and/or right side of the header:
-% \logoright{\includegraphics[height=7cm]{logos/cs-logo-maroon.png}}
-% \logoleft{\includegraphics[height=7cm]{logos/cs-logo-maroon.png}}
+  2026 Stanford COMET Research Symposium \hfill
+  IBH / PANS Clinic, Stanford Children's Health \hfill
+  Stanford University}
 
 % ====================
 % Body
@@ -68,14 +67,17 @@
 
 \begin{document}
 
-% This adds the Logos on the top left and top right
 \addtobeamertemplate{headline}{}
 {
     \begin{tikzpicture}[remember picture,overlay]
-    %   \node [anchor=north west, inner sep=3cm] at ([xshift=0.0cm,yshift=1.0cm]current page.north west)
-    %   {\includegraphics[height=5.0cm]{stanford_logos/Stanford-CS.png}}; % uc-logo-white.eps
-      \node [anchor=north east, inner sep=3cm] at ([xshift=0.0cm,yshift=2.5cm]current page.north east)
-      {\includegraphics[height=7.0cm]{stanford_logos/Block_S_2_color.png}};
+      % Stanford Block S -- top right
+      \node [anchor=north east, inner sep=3cm]
+        at ([xshift=0.0cm,yshift=2.5cm]current page.north east)
+        {\includegraphics[height=7.0cm]{stanford_logos/Block_S_2_color.png}};
+      % Stanford School of Medicine -- top left
+      \node [anchor=north west, inner sep=3cm]
+        at ([xshift=0.0cm,yshift=2.5cm]current page.north west)
+        {\includegraphics[height=7.0cm]{stanford_logos/SM_Web_vert_LG.png}};
     \end{tikzpicture}
 }
 
@@ -83,163 +85,96 @@
 \begin{columns}[t]
 \separatorcolumn
 
+% =====================================================================
+% LEFT COLUMN
+% =====================================================================
 \begin{column}{\colwidth}
 
-  \begin{block}{Introduction}
+  \begin{block}{Background}
 
-    Some block contents, followed by a diagram, followed by a dummy paragraph.
+    Reconstructing longitudinal medication histories from the electronic health
+    record (EHR) for research relies on \textbf{labor-intensive manual chart
+    abstraction}. Large language models (LLMs) may substantially reduce this
+    burden, but their reliability against human abstraction is largely
+    unquantified -- particularly in complex pediatric settings.
 
-    \begin{figure}
-      \centering
-      \begin{tikzpicture}[scale=6]
-        \draw[step=0.25cm,color=gray] (-1,-1) grid (1,1);
-        \draw (1,0) -- (0.2,0.2) -- (0,1) -- (-0.2,0.2) -- (-1,0)
-          -- (-0.2,-0.2) -- (0,-1) -- (0.2,-0.2) -- cycle;
-      \end{tikzpicture}
-      \caption{A figure caption.}
-    \end{figure}
+    \vspace{0.6em}
+    \textbf{Setting:} The Stanford Children's Immune Behavioral Health (IBH) /
+    PANS clinic manages patients with complex, multi-medication courses spanning
+    psychiatric, DMARD, NSAID, steroid, and infusion therapies -- a demanding
+    extraction target.
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultricies
-    eget libero ac ullamcorper. Integer et euismod ante. Aenean vestibulum
-    lobortis augue, ut lobortis turpis rhoncus sed. Proin feugiat nibh a
-    lacinia dignissim. Proin scelerisque, risus eget tempor fermentum, ex
-    turpis condimentum urna, quis malesuada sapien arcu eu purus.
-
-  \end{block}
-
-  \begin{block}{Background: Metacognition}
-
-    Nam vulputate nunc felis, non condimentum lacus porta ultrices. Nullam sed
-    sagittis metus. Etiam consectetur gravida urna quis suscipit.
-
+    \vspace{0.6em}
+    \textbf{Two research questions (kept strictly separate):}
     \begin{itemize}
-      \item \textbf{Mauris tempor} risus nulla, sed ornare
-      \item \textbf{Libero tincidunt} a duis congue vitae
-      \item \textbf{Dui ac pretium} morbi justo neque, ullamcorper
+      \item \textbf{Similarity:} How closely do the two methods agree?
+      \item \textbf{Accuracy:} Where they differ, who is right?
     \end{itemize}
 
-    Eget augue porta, bibendum venenatis tortor.
-
   \end{block}
-  
-    \begin{block}{Background: Reinforcement Learning}
-    
-    \end{block}
 
-  \begin{alertblock}{A highlighted block}
+  \begin{block}{Methods}
 
-    This block catches your eye, so \textbf{important stuff} should probably go
-    here.
+    \textbf{Design:} Single-patient pilot (patient 77-1120). Inter-method
+    agreement study with manual adjudication. Review window: April 2024 through
+    June 2026.
 
-    Curabitur eu libero vehicula, cursus est fringilla, luctus est. Morbi
-    consectetur mauris quam, at finibus elit auctor ac. Aliquam erat volutpat.
-    Aenean at nisl ut ex ullamcorper eleifend et eu augue. Aenean quis velit
-    tristique odio convallis ultrices a ac odio.
+    \vspace{0.8em}
+    \textbf{AI Extraction Pipeline}
 
+    \vspace{0.5em}
+    \begin{tikzpicture}[
+      node distance=0.35cm and 0.9cm,
+      src/.style={draw, rounded corners=4pt, fill=slatecol!15,
+                  text width=3.5cm, align=center,
+                  minimum height=1.1cm, font=\small},
+      proc/.style={draw, rounded corners=4pt, fill=aiteal!20,
+                   text width=2.8cm, align=center,
+                   minimum height=1.1cm, font=\small},
+      human/.style={draw, rounded corners=4pt, fill=humancardinal!15,
+                    text width=3.5cm, align=center,
+                    minimum height=1.1cm, font=\small},
+      arr/.style={-Stealth, thick, color=slatecol}
+    ]
+      \node[src]  (s1)    {S1\\Epic Clinical Notes};
+      \node[src, below=of s1] (s2) {S2\\Epic Med Records};
+      \node[src, below=of s2] (s3) {S3\\Parent REDCap};
+      \node[proc, right=1.5cm of s2]  (o4) {Reconcile\\(O4)};
+      \node[proc, right=1.5cm of o4]  (o5) {Compare\\(O5)};
+      \node[human, above=0.6cm of o5] (hum){Human\\REDCap};
+
+      \draw[arr] (s1.east) -- ++(0.5,0) |- (o4.west);
+      \draw[arr] (s2.east) -- (o4.west);
+      \draw[arr] (s3.east) -- ++(0.5,0) |- (o4.west);
+      \draw[arr] (o4.east) -- (o5.west);
+      \draw[arr] (hum.south) -- (o5.north);
+    \end{tikzpicture}
+
+    \vspace{0.7em}
+    \textbf{Extraction model:} Claude Opus 4.6 via Stanford Secure GPT
+    (PHI-compliant gateway / AWS Bedrock). Each source extracted independently;
+    reconciled into one AI list (O4) using a confidence-weighted,
+    source-aware model.
+
+    \vspace{0.7em}
+    \textbf{Three comparison layers:}
     \begin{itemize}
-      \item \textbf{Fusce dapibus tellus} vel tellus semper finibus. In
-        consequat, nibh sed mattis luctus, augue diam fermentum lectus.
-      \item \textbf{In euismod erat metus} non ex. Vestibulum luctus augue in
-        mi condimentum, at sollicitudin lorem viverra.
-      \item \textbf{Suspendisse vulputate} mauris vel placerat consectetur.
-        Mauris semper, purus ac hendrerit molestie, elit mi dignissim odio, in
-        suscipit felis sapien vel ex.
+      \item \textbf{Layer A -- Drug presence:} Was each medication captured
+            by both methods?
+      \item \textbf{Layer B -- Episode:} Did each start-to-stop course match?
+      \item \textbf{Layer C -- Field-level:} Start date, stop date, dose,
+            status, and discontinuation reason on matched pairs.
     \end{itemize}
 
-    Aenean tincidunt risus eros, at gravida lorem sagittis vel. Vestibulum ante
-    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.
+    \vspace{0.6em}
+    \textbf{Adjudication:} Each substantive disagreement (contest) was judged
+    against the source chart as AI-correct, human-correct, both-defensible, or
+    both-wrong, with cause classified into six root-cause categories.
 
-  \end{alertblock}
-
-\end{column}
-
-\separatorcolumn
-
-\begin{column}{\colwidth}
-
-  \begin{block}{A block containing an enumerated list}
-
-    Vivamus congue volutpat elit non semper. Praesent molestie nec erat ac
-    interdum. In quis suscipit erat. \textbf{Phasellus mauris felis, molestie
-    ac pharetra quis}, tempus nec ante. Donec finibus ante vel purus mollis
-    fermentum. Sed felis mi, pharetra eget nibh a, feugiat eleifend dolor. Nam
-    mollis condimentum purus quis sodales. Nullam eu felis eu nulla eleifend
-    bibendum nec eu lorem. Vivamus felis velit, volutpat ut facilisis ac,
-    commodo in metus.
-
-    \begin{enumerate}
-      \item \textbf{Morbi mauris purus}, egestas at vehicula et, convallis
-        accumsan orci. Orci varius natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus.
-      \item \textbf{Cras vehicula blandit urna ut maximus}. Aliquam blandit nec
-        massa ac sollicitudin. Curabitur cursus, metus nec imperdiet bibendum,
-        velit lectus faucibus dolor, quis gravida metus mauris gravida turpis.
-      \item \textbf{Vestibulum et massa diam}. Phasellus fermentum augue non
-        nulla accumsan, non rhoncus lectus condimentum.
-    \end{enumerate}
-
-  \end{block}
-
-  \begin{block}{Fusce aliquam magna velit}
-
-    Et rutrum ex euismod vel. Pellentesque ultricies, velit in fermentum
-    vestibulum, lectus nisi pretium nibh, sit amet aliquam lectus augue vel
-    velit. Suspendisse rhoncus massa porttitor augue feugiat molestie. Sed
-    molestie ut orci nec malesuada. Sed ultricies feugiat est fringilla
-    posuere.
-
-    \begin{figure}
-      \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-            scale only axis,
-            no markers,
-            domain=0:2*pi,
-            samples=100,
-            axis lines=center,
-            axis line style={-},
-            ticks=none]
-          \addplot[red] {sin(deg(x))};
-          \addplot[blue] {cos(deg(x))};
-        \end{axis}
-      \end{tikzpicture}
-      \caption{Another figure caption.}
-    \end{figure}
-
-  \end{block}
-
-  \begin{block}{Nam cursus consequat egestas}
-
-    Nulla eget sem quam. Ut aliquam volutpat nisi vestibulum convallis. Nunc a
-    lectus et eros facilisis hendrerit eu non urna. Interdum et malesuada fames
-    ac ante \textit{ipsum primis} in faucibus. Etiam sit amet velit eget sem
-    euismod tristique. Praesent enim erat, porta vel mattis sed, pharetra sed
-    ipsum. Morbi commodo condimentum massa, \textit{tempus venenatis} massa
-    hendrerit quis. Maecenas sed porta est. Praesent mollis interdum lectus,
-    sit amet sollicitudin risus tincidunt non.
-
-    Etiam sit amet tempus lorem, aliquet condimentum velit. Donec et nibh
-    consequat, sagittis ex eget, dictum orci. Etiam quis semper ante. Ut eu
-    mauris purus. Proin nec consectetur ligula. Mauris pretium molestie
-    ullamcorper. Integer nisi neque, aliquet et odio non, sagittis porta justo.
-
-    \begin{itemize}
-      \item \textbf{Sed consequat} id ante vel efficitur. Praesent congue massa
-        sed est scelerisque, elementum mollis augue iaculis.
-        \begin{itemize}
-          \item In sed est finibus, vulputate
-            nunc gravida, pulvinar lorem. In maximus nunc dolor, sed auctor eros
-            porttitor quis.
-          \item Fusce ornare dignissim nisi. Nam sit amet risus vel lacus
-            tempor tincidunt eu a arcu.
-          \item Donec rhoncus vestibulum erat, quis aliquam leo
-            gravida egestas.
-        \end{itemize}
-      \item \textbf{Sed luctus, elit sit amet} dictum maximus, diam dolor
-        faucibus purus, sed lobortis justo erat id turpis.
-      \item \textbf{Pellentesque facilisis dolor in leo} bibendum congue.
-        Maecenas congue finibus justo, vitae eleifend urna facilisis at.
-    \end{itemize}
+    \vspace{0.6em}
+    \textbf{Scope:} 21 medications analyzed. Miscellaneous / OTC items not
+    collected by the human team and one after-window DMARD were excluded. All
+    exclusions are documented.
 
   \end{block}
 
@@ -247,79 +182,221 @@
 
 \separatorcolumn
 
+% =====================================================================
+% MIDDLE COLUMN
+% =====================================================================
 \begin{column}{\colwidth}
 
-  \begin{block}{A block containing some math}
-
-    Nullam non est elit. In eu ornare justo. Maecenas porttitor sodales lacus,
-    ut cursus augue sodales ac.
-
-    $$
-    \int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
-    $$
-
-    Interdum et malesuada fames $\{1, 4, 9, \ldots\}$ ac ante ipsum primis in
-    faucibus. Cras eleifend dolor eu nulla suscipit suscipit. Sed lobortis non
-    felis id vulputate.
-
-    \heading{A heading inside a block}
-
-    Praesent consectetur mi $x^2 + y^2$ metus, nec vestibulum justo viverra
-    nec. Proin eget nulla pretium, egestas magna aliquam, mollis neque. Vivamus
-    dictum $\mathbf{u}^\intercal\mathbf{v}$ sagittis odio, vel porta erat
-    congue sed. Maecenas ut dolor quis arcu auctor porttitor.
-
-    \heading{Another heading inside a block}
-
-    Sed augue erat, scelerisque a purus ultricies, placerat porttitor neque.
-    Donec $P(y \mid x)$ fermentum consectetur $\nabla_x P(y \mid x)$ sapien
-    sagittis egestas. Duis eget leo euismod nunc viverra imperdiet nec id
-    justo.
-
-  \end{block}
-
-  \begin{block}{Nullam vel erat at velit convallis laoreet}
-
-    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-    inceptos himenaeos. Phasellus libero enim, gravida sed erat sit amet,
-    scelerisque congue diam. Fusce dapibus dui ut augue pulvinar iaculis.
-
-    \begin{table}
-      \centering
-      \begin{tabular}{l r r c}
+  \begin{alertblock}{Key Results at a Glance}
+    \begin{center}
+      \begin{tabular}{lcc}
         \toprule
-        \textbf{First column} & \textbf{Second column} & \textbf{Third column} & \textbf{Fourth} \\
+        \textbf{Metric} & \textbf{Result} & \textbf{(N)} \\
         \midrule
-        Foo & 13.37 & 384,394 & $\alpha$ \\
-        Bar & 2.17 & 1,392 & $\beta$ \\
-        Baz & 3.14 & 83,742 & $\delta$ \\
-        Qux & 7.59 & 974 & $\gamma$ \\
+        Drug presence agreement (Layer A) & \textbf{90.5\%} & (21 drugs) \\
+        Human-only drugs (AI missed)      & \textbf{0}      & \\
+        Episode match (Layer B)           & \textbf{85.3\%} & (34 episodes) \\
+        Start date within 7 days          & \textbf{93.1\%} & (29 matched) \\
+        Stop date within 7 days           & \textbf{89.5\%} & (19 matched) \\
+        Status agreement                  & \textbf{90.0\%} & (29 matched) \\
+        Discontinuation reason            & \textbf{60.0\%} & (15 matched) \\
         \bottomrule
       \end{tabular}
-      \caption{A table caption.}
-    \end{table}
+    \end{center}
+  \end{alertblock}
 
-    Donec quis posuere ligula. Nunc feugiat elit a mi malesuada consequat. Sed
-    imperdiet augue ac nibh aliquet tristique. Aenean eu tortor vulputate,
-    eleifend lorem in, dictum urna. Proin auctor ante in augue tincidunt
-    tempor. Proin pellentesque vulputate odio, ac gravida nulla posuere
-    efficitur. Aenean at velit vel dolor blandit molestie. Mauris laoreet
-    commodo quam, non luctus nibh ullamcorper in. Class aptent taciti sociosqu
-    ad litora torquent per conubia nostra, per inceptos himenaeos.
+  \begin{block}{Similarity: Drug Presence (Layer A)}
 
-    Nulla varius finibus volutpat. Mauris molestie lorem tincidunt, iaculis
-    libero at, gravida ante. Phasellus at felis eu neque suscipit suscipit.
-    Integer ullamcorper, dui nec pretium ornare, urna dolor consequat libero,
-    in feugiat elit lorem euismod lacus. Pellentesque sit amet dolor mollis,
-    auctor urna non, tempus sem.
+    Of 21 AI-extracted medications, \textbf{19 (90.5\%)} were also captured by
+    the human team. The AI missed \textbf{zero} medications the human team
+    collected. Two AI-only drugs were confirmed real exposures:
+    hydroxyzine (confirmed human omission) and lorazepam (documented dispensing
+    only partially captured by both methods).
+
+    \vspace{0.5em}
+    Shared medications by class: 6 psychiatric, 4 NSAID, 4 DMARD, 3 steroid /
+    infusion, 2 antibiotic.
+
+  \end{block}
+
+  \begin{block}{Similarity: Episode and Field Agreement (Layers B+C)}
+
+    \heading{Episode matching (Layer B)}
+
+    29 of 34 episodes (85.3\%) matched across methods. There were 4 AI-only
+    episodes and 1 human-only pre-window trial. Among matched pairs, 8
+    differences were recording-convention disagreements (dose-step granularity
+    or dating style) rather than substantive errors.
+
+    \vspace{0.7em}
+    \heading{Date concordance (Layer C)}
+
+    \begin{center}
+      \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Field} & \textbf{Exact} & \textbf{$\leq$7 d} & \textbf{$\leq$30 d} & \textbf{Same Qtr} \\
+        \midrule
+        Start date & 69\% & 93.1\% & 96.6\% & 100\% \\
+        Stop date  & 63\% & 89.5\% & 100\%  & 100\% \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+
+    \vspace{0.5em}
+    Status agreed in 90\% of matched pairs (26/29). Discontinuation reason was
+    the weakest field at 60\% (9/15); adjudication shows most disagreements
+    reflect vocabulary differences or could-not-be-known information rather
+    than model error.
+
+  \end{block}
+
+  \begin{block}{Source-by-Field Concordance (pre-adjudication)}
+
+    \begin{center}
+      \begin{tabular}{lccc}
+        \toprule
+        \textbf{Field} & \textbf{S1 Notes} & \textbf{S2 Epic} & \textbf{S3 Parent} \\
+        \midrule
+        Start date            & 88\% & \textbf{96\%} & 69\% \\
+        Stop date             & \textbf{81\%} & 69\% & 50\% \\
+        Status                & 93\% & 86\% & \textbf{96\%} \\
+        Discontinuation reason & \textbf{64\%} & 43\% & 36\% \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+
+    \vspace{0.4em}
+    Validates reconciliation weighting: Epic wins on start and administration
+    dates; clinical notes win on stop dates and reasons; parent report serves
+    as gap-filler and tie-breaker only.
+
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+% =====================================================================
+% RIGHT COLUMN
+% =====================================================================
+\begin{column}{\colwidth}
+
+  \begin{block}{Accuracy: Adjudication of 17 Contests}
+
+    \begin{center}
+      \begin{tabular}{lcc}
+        \toprule
+        \textbf{Outcome} & \textbf{N} & \textbf{Notes} \\
+        \midrule
+        AI correct     & 5 & Incl.\ 2 confirmed human omissions \\
+        Human correct  & 2 & Incl.\ 1 genuine AI reasoning error \\
+        Both defensible & 6 & Clinical judgment ties \\
+        Not enough info & 3 & Could not be known from AI inputs \\
+        Both wrong      & 1 & Lorazepam episode \\
+        \midrule
+        \textbf{AI win rate (decided)} & \textbf{5/7 (71.4\%)} & \\
+        Severity-weighted score       & AI 11 vs.\ human 5 & (68.75\%) \\
+        \textbf{Genuine AI errors}    & \textbf{1/17 (5.9\%)} & \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+
+    \vspace{0.7em}
+    \heading{Root-cause attribution (17 contests)}
+
+    \begin{center}
+      \begin{tabular}{lc}
+        \toprule
+        \textbf{Category} & \textbf{N} \\
+        \midrule
+        AI correct, human missed or wrong & 5 \\
+        Input / pipeline data unavailable (STARR) & 5 \\
+        Both defensible (clinical judgment) & 3 \\
+        AI correct, outside human scope / timing & 2 \\
+        Clinician-only knowledge & 1 \\
+        Genuine AI reasoning error & 1 \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+
+  \end{block}
+
+  \begin{block}{Confidence vs.\ Validated Accuracy}
+
+    Each contest was tagged with the AI episode's reconciliation confidence
+    (high / medium / low). \textbf{Merit-loss rate} = (human beats it + both
+    wrong) / total, excluding could-not-be-known ties.
+
+    \vspace{0.5em}
+    \begin{center}
+      \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Confidence} & \textbf{N} & \textbf{AI correct} & \textbf{Human beats it} & \textbf{Merit-loss} \\
+        \midrule
+        High   & 6 & 2 & 0 & \textbf{0\%}  \\
+        Medium & 5 & 2 & 1 & \textbf{20\%} \\
+        Low    & 5 & 1 & 1 & \textbf{40\%} \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+
+    \vspace{0.4em}
+    High confidence never lost on the merits (its 3 non-AI-correct outcomes
+    were all could-not-be-known). The single genuine reasoning error sat at
+    medium, indicating the model under-discriminates at the top. The
+    \textbf{low-confidence tag is a reliable verify signal} for targeted human
+    review.
+
+  \end{block}
+
+  \begin{block}{Cost Estimate}
+
+    \begin{center}
+      \begin{tabular}{lc}
+        \toprule
+        \textbf{Scenario} & \textbf{Estimated cost (1 patient)} \\
+        \midrule
+        List-price, uncached (full run) & $\sim$\$28 \\
+        With prompt caching (Bedrock)   & $\sim$\$7--10 \\
+        Human abstraction (skilled labor) & Several hours \\
+        \midrule
+        \textbf{AI vs.\ human cost ratio} & \textbf{5--15$\times$ lower} \\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+
+    \vspace{0.3em}
+    Actual token usage is capturable from SecureChatAI session logs (measured,
+    not estimated). Cached estimate requires Bedrock prompt-cache confirmation.
+
+  \end{block}
+
+  \begin{block}{Conclusions}
+
+    \begin{itemize}
+      \item The LLM pipeline achieved \textbf{high concordance with human
+            abstraction} on drug presence (90.5\%), episode timing, and
+            medication status.
+      \item \textbf{The AI missed zero medications} captured by the human
+            team; 2 AI-only drugs were real exposures the human team missed.
+      \item Disagreement concentrated in \textbf{discontinuation reason
+            (60\%)}, but adjudication shows most cases reflect vocabulary
+            differences or input limitations -- not model error.
+      \item \textbf{Low-confidence tags effectively identify} episodes
+            warranting targeted human review (merit-loss 40\% vs.\ 0\% at
+            high confidence).
+      \item AI extraction is estimated to be \textbf{5--15$\times$ cheaper}
+            than human abstraction before accounting for turnaround speed.
+      \item Results are \textbf{descriptive (n=1)} and require multi-patient
+            validation, but support feasibility for scaling with
+            confidence-guided review.
+    \end{itemize}
 
   \end{block}
 
   \begin{block}{References}
-
     \nocite{*}
     \footnotesize{\bibliographystyle{plain}\bibliography{poster}}
-
   \end{block}
 
 \end{column}
