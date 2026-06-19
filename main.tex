@@ -137,6 +137,10 @@
                    text width=10.5cm, align=center,
                    minimum height=2.8cm,
                    font={\large\hyphenpenalty=10000\exhyphenpenalty=10000}},
+      gpt/.style={draw, rounded corners=8pt, fill=darkcyan!20,
+                  text width=10.5cm, align=center,
+                  minimum height=2.8cm,
+                  font={\large\hyphenpenalty=10000\exhyphenpenalty=10000}},
       human/.style={draw, rounded corners=8pt, fill=humancardinal!15,
                     text width=10.5cm, align=center,
                     minimum height=2.8cm,
@@ -145,25 +149,32 @@
                   text width=10.5cm, align=center,
                   minimum height=2.8cm,
                   font={\large\hyphenpenalty=10000\exhyphenpenalty=10000}},
-      arr/.style={-Stealth, very thick, color=slatecol, line width=2pt}
+      arr/.style={-Stealth, very thick, color=slatecol, line width=2pt},
+      barr/.style={Stealth-Stealth, very thick, color=slatecol, line width=2pt}
     ]
       % Row 1: data sources
       \node[src] (notes)  {Epic Clinical Notes};
       \node[src, right=1.5cm of notes]  (medrec) {Epic Medications};
       \node[src, right=1.5cm of medrec] (parent) {Parent Questionnaire};
 
-      % Row 2: reconciliation (centered below middle source)
-      \node[proc, below=2.0cm of medrec] (recon) {Reconciliation};
+      % Row 2: SecureGPT (PHI-compliant gateway)
+      \node[gpt, below=2.0cm of medrec] (sgpt) {SecureGPT};
 
-      % Row 3: RA abstraction, comparison, adjudication
+      % Row 3: reconciliation
+      \node[proc, below=2.0cm of sgpt] (recon) {Reconciliation};
+
+      % Row 4: RA abstraction, comparison, adjudication
       \node[proc,  below=2.0cm of recon]  (comp) {Comparison};
       \node[human, left=1.5cm of comp]    (hum)  {RA Medication Abstraction};
       \node[adj,   right=1.5cm of comp]   (adj)  {Adjudication};
 
-      % Sources funnel down to reconciliation
-      \draw[arr] (notes.south)  -- ++(0,-0.7) -| (recon.north);
-      \draw[arr] (medrec.south) -- (recon.north);
-      \draw[arr] (parent.south) -- ++(0,-0.7) -| (recon.north);
+      % Sources funnel into SecureGPT
+      \draw[arr] (notes.south)  -- ++(0,-0.7) -| (sgpt.north);
+      \draw[arr] (medrec.south) -- (sgpt.north);
+      \draw[arr] (parent.south) -- ++(0,-0.7) -| (sgpt.north);
+
+      % SecureGPT <-> Reconciliation (bidirectional)
+      \draw[barr] (sgpt.south) -- (recon.north);
 
       % Reconciliation down to comparison
       \draw[arr] (recon.south) -- (comp.north);
