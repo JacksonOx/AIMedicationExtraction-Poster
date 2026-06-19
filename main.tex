@@ -219,43 +219,56 @@
 \separatorcolumn
 
 % =====================================================================
-% MIDDLE COLUMN  (Agreement / Similarity)
+% MIDDLE COLUMN  (Results: Agreement / Alignment)
+% Logical order: drug presence -> dates -> field values -> source weighting
 % =====================================================================
 \begin{column}{\colwidth}
 
-  \begin{block}{Agreement Results}
-    \begin{center}
-      \includesvg[width=0.98\colwidth]{fig10_agreement_glance}
-    \end{center}
-  \end{block}
-
-  \begin{block}{Validated Medications: AI vs.\ Human}
+  % ============================================================
+  % 1. DRUG PRESENCE  (did both methods find the same drugs?)
+  % ============================================================
+  \begin{block}{Agreement: Drug Presence}
     \begin{center}
       \includesvg[height=13cm]{fig7_validated_meds_stack}
     \end{center}
-    \small The AI recorded every medication the RAs did and \textbf{2} more;
-    one of those was a \textbf{confirmed human omission}.
+    \vspace{0.2em}
+    Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by
+    both methods. The AI missed \textbf{none} the RAs recorded and captured
+    \textbf{2} more, one a \textbf{confirmed human omission}.
   \end{block}
 
-  \begin{block}{Date and Field Concordance}
+  % ============================================================
+  % 2. DATES  (do the start/stop timings line up?)
+  % ============================================================
+  \begin{block}{Agreement: Dates}
     \begin{center}
-      \begin{tabular}{lcccc}
-        \toprule
-        \textbf{Field} & \textbf{Exact} & \textbf{$\leq$7 d} & \textbf{$\leq$30 d} & \textbf{Same Qtr} \\
-        \midrule
-        Start date & 69\% & 93\% & 96.6\% & 100\% \\
-        Stop date  & 63\% & 89\% & 100\%  & 100\% \\
-        \bottomrule
-      \end{tabular}
+      \includesvg[width=0.98\colwidth]{fig11_date_concordance}
     \end{center}
-    \vspace{0.3em}
-    Among matched episodes, dates converge quickly: every comparable date
-    falls within one calendar quarter. Status agreed in \textbf{90\%}, and
-    discontinuation reason was the only weak field (\textbf{60\%}), where
-    adjudication shows most of the gap is vocabulary or facts absent from the
-    AI's inputs, not model error.
+    \vspace{0.2em}
+    Among matched episodes, dates converge quickly: \textbf{93\%} of start and
+    \textbf{89\%} of stop dates agree within 7 days, and every comparable date
+    falls within the same calendar quarter.
   \end{block}
 
+  % ============================================================
+  % 3. FIELD VALUES: STATUS AND DISCONTINUATION REASON
+  % ============================================================
+  \begin{block}{Agreement: Status and Discontinuation Reason}
+    Medication status (ongoing vs.\ stopped) agreed in \textbf{90\%}.
+    Discontinuation reason was the only weak field at \textbf{60\% (9/15)}.
+    \begin{center}
+      \includesvg[width=0.95\colwidth]{fig12_discontinuation_reason}
+    \end{center}
+    \vspace{0.2em}
+    Adjudication shows most of that gap is \emph{not} model error: the
+    disagreements are largely the same clinical event in different defensible
+    vocabulary, or facts absent from the AI's inputs (such as an
+    insurance-driven stop). Only \textbf{one} reason was a genuine AI mistake.
+  \end{block}
+
+  % ============================================================
+  % 4. SOURCE-BY-FIELD  (which input source is most reliable; validates weighting)
+  % ============================================================
   \begin{block}{Source-by-Field Concordance (pre-adjudication)}
     \begin{center}
       \begin{tabular}{lccc}
