@@ -124,35 +124,42 @@
     (April 2024) through most recent encounter (June 2026).
 
     \vspace{0.8em}
-    \textbf{AI Extraction Pipeline}
+    \textbf{AI Extraction and Adjudication Pipeline}
 
     \vspace{0.5em}
+    \resizebox{\colwidth}{!}{%
     \begin{tikzpicture}[
-      node distance=0.35cm and 0.9cm,
-      src/.style={draw, rounded corners=4pt, fill=slatecol!15,
-                  text width=3.5cm, align=center,
-                  minimum height=1.1cm, font=\small},
-      proc/.style={draw, rounded corners=4pt, fill=aiteal!20,
+      node distance=0.5cm and 1.4cm,
+      src/.style={draw, rounded corners=5pt, fill=slatecol!15,
+                  text width=3.2cm, align=center,
+                  minimum height=1.2cm, font=\normalsize},
+      proc/.style={draw, rounded corners=5pt, fill=aiteal!20,
                    text width=2.8cm, align=center,
-                   minimum height=1.1cm, font=\small},
-      human/.style={draw, rounded corners=4pt, fill=humancardinal!15,
-                    text width=3.5cm, align=center,
-                    minimum height=1.1cm, font=\small},
+                   minimum height=1.2cm, font=\normalsize},
+      human/.style={draw, rounded corners=5pt, fill=humancardinal!15,
+                    text width=3.0cm, align=center,
+                    minimum height=1.2cm, font=\normalsize},
+      adj/.style={draw, rounded corners=5pt, fill=erroramber!20,
+                  text width=2.8cm, align=center,
+                  minimum height=1.2cm, font=\normalsize},
       arr/.style={-Stealth, thick, color=slatecol}
     ]
-      \node[src]  (s1)    {S1\\Epic Clinical Notes};
-      \node[src, below=of s1] (s2) {S2\\Epic Med Records};
-      \node[src, below=of s2] (s3) {S3\\Parent REDCap};
-      \node[proc, right=1.5cm of s2]  (o4) {Reconcile\\(O4)};
-      \node[proc, right=1.5cm of o4]  (o5) {Compare\\(O5)};
-      \node[human, above=0.6cm of o5] (hum){Human\\REDCap};
+      \node[src]  (notes)  {Epic Clinical Notes};
+      \node[src, below=of notes]  (medrec) {Epic Med Records};
+      \node[src, below=of medrec] (parent) {Parent REDCap};
+      \node[proc, right=1.6cm of medrec] (recon) {Reconcile};
+      \node[proc, right=1.6cm of recon]  (comp)  {Compare};
+      \node[adj,  right=1.6cm of comp]   (adj)   {Adjudication};
+      \node[human, below=0.8cm of comp]  (hum)   {Human REDCap\\(RA Abstraction)};
 
-      \draw[arr] (s1.east) -- ++(0.5,0) |- (o4.west);
-      \draw[arr] (s2.east) -- (o4.west);
-      \draw[arr] (s3.east) -- ++(0.5,0) |- (o4.west);
-      \draw[arr] (o4.east) -- (o5.west);
-      \draw[arr] (hum.south) -- (o5.north);
-    \end{tikzpicture}
+      \draw[arr] (notes.east)  -- ++(0.5,0) |- (recon.west);
+      \draw[arr] (medrec.east) -- (recon.west);
+      \draw[arr] (parent.east) -- ++(0.5,0) |- (recon.west);
+      \draw[arr] (recon.east)  -- (comp.west);
+      \draw[arr] (hum.north)   -- (comp.south);
+      \draw[arr] (comp.east)   -- (adj.west);
+    \end{tikzpicture}%
+    }
 
     \vspace{0.7em}
     \textbf{Extraction model:} Claude Opus 4.6 via SecureGPT (Stanford's
