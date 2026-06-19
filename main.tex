@@ -127,26 +127,27 @@
     \textbf{AI Extraction and Adjudication Pipeline}
 
     \vspace{0.5em}
+    \begin{center}
     \begin{tikzpicture}[
       node distance=1.4cm and 1.5cm,
       src/.style={draw, rounded corners=6pt, fill=slatecol!15,
-                  text width=7.35cm, align=center,
+                  text width=9cm, align=center,
                   minimum height=1.96cm,
                   font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       proc/.style={draw, rounded corners=6pt, fill=aiteal!20,
-                   text width=7.35cm, align=center,
+                   text width=9cm, align=center,
                    minimum height=1.96cm,
                    font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       gpt/.style={draw, rounded corners=6pt, fill=darkcyan!20,
-                  text width=7.35cm, align=center,
+                  text width=9cm, align=center,
                   minimum height=1.96cm,
                   font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       human/.style={draw, rounded corners=6pt, fill=humancardinal!15,
-                    text width=7.35cm, align=center,
+                    text width=9cm, align=center,
                     minimum height=1.96cm,
                     font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       adj/.style={draw, rounded corners=6pt, fill=erroramber!20,
-                  text width=7.35cm, align=center,
+                  text width=9cm, align=center,
                   minimum height=1.96cm,
                   font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       arr/.style={-Stealth, very thick, color=slatecol, line width=1.5pt},
@@ -185,6 +186,7 @@
       % Comparison to adjudication
       \draw[arr] (comp.east) -- (adj.west);
     \end{tikzpicture}
+    \end{center}
 
     \vspace{0.7em}
     \textbf{Extraction model:} Claude Opus 4.6 via SecureGPT (Stanford's
