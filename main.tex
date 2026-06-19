@@ -79,7 +79,7 @@
         {\includegraphics[height=7.0cm]{stanford_logos/Block_S_2_color.png}};
       % Stanford School of Medicine -- top left
       \node [anchor=north west, inner sep=3.5cm]
-        at ([xshift=-0.5cm,yshift=2.5cm]current page.north west)
+        at ([xshift=-0.5cm,yshift=1.5cm]current page.north west)
         {\colorbox{white}{\includegraphics[height=5.6cm]{stanford_logos/SM_Web_vert_LG.png}}};
     \end{tikzpicture}
 }
@@ -210,13 +210,13 @@
 
   \begin{block}{Agreement: Drug Presence}
 
-    The AI extracted 21 medications; \textbf{19 (90.5\%)} were also recorded
-    by RAs. The AI missed \textbf{none} the RAs recorded; 2 were captured only
-    by the AI, one a confirmed human omission.
-
-    \vspace{0.5em}
-    Shared medications by class: 6 psychiatric, 4 NSAID, 4 DMARD, 3 steroid /
-    infusion, 2 antibiotic.
+\begin{itemize}
+  \item The AI extracted \textbf{21} validated medications, of which
+        \textbf{19 (90.5\%)} were also recorded by the RAs.
+  \item The AI missed \textbf{zero medications} recorded by the RAs, and it captured
+        \textbf{2} additional medications that the RAs did not, one of which was a
+        \textbf{confirmed human omission}.
+\end{itemize}
 
   \end{block}
 
