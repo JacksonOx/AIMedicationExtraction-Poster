@@ -127,51 +127,49 @@
     \textbf{AI Extraction and Adjudication Pipeline}
 
     \vspace{0.5em}
-    \resizebox{\colwidth}{!}{%
     \begin{tikzpicture}[
       node distance=1.2cm and 1.0cm,
-      src/.style={draw, rounded corners=5pt, fill=slatecol!15,
-                  text width=3.0cm, align=center,
-                  minimum height=1.2cm, font=\normalsize},
-      proc/.style={draw, rounded corners=5pt, fill=aiteal!20,
-                   text width=3.0cm, align=center,
-                   minimum height=1.2cm, font=\normalsize},
-      human/.style={draw, rounded corners=5pt, fill=humancardinal!15,
-                    text width=3.0cm, align=center,
-                    minimum height=1.2cm, font=\normalsize},
-      adj/.style={draw, rounded corners=5pt, fill=erroramber!20,
-                  text width=3.0cm, align=center,
-                  minimum height=1.2cm, font=\normalsize},
-      arr/.style={-Stealth, thick, color=slatecol}
+      src/.style={draw, rounded corners=8pt, fill=slatecol!15,
+                  text width=7.5cm, align=center,
+                  minimum height=2.8cm, font=\large},
+      proc/.style={draw, rounded corners=8pt, fill=aiteal!20,
+                   text width=7.5cm, align=center,
+                   minimum height=2.8cm, font=\large},
+      human/.style={draw, rounded corners=8pt, fill=humancardinal!15,
+                    text width=7.5cm, align=center,
+                    minimum height=2.8cm, font=\large},
+      adj/.style={draw, rounded corners=8pt, fill=erroramber!20,
+                  text width=7.5cm, align=center,
+                  minimum height=2.8cm, font=\large},
+      arr/.style={-Stealth, very thick, color=slatecol, line width=2pt}
     ]
       % Row 1: data sources
       \node[src] (notes)  {Epic Clinical Notes};
-      \node[src, right=1.0cm of notes]  (medrec) {Epic Medications};
-      \node[src, right=1.0cm of medrec] (parent) {Parent Questionnaire};
+      \node[src, right=1.2cm of notes]  (medrec) {Epic Medications};
+      \node[src, right=1.2cm of medrec] (parent) {Parent Questionnaire};
 
       % Row 2: reconciliation (centered below middle source)
-      \node[proc, below=1.4cm of medrec] (recon) {Reconciliation};
+      \node[proc, below=1.8cm of medrec] (recon) {Reconciliation};
 
-      % Row 3: human input, comparison, adjudication
-      \node[proc,  below=1.4cm of recon]  (comp) {Comparison};
-      \node[human, left=1.0cm of comp]    (hum)  {Human REDCap\\(RA Abstraction)};
-      \node[adj,   right=1.0cm of comp]   (adj)  {Adjudication};
+      % Row 3: RA abstraction, comparison, adjudication
+      \node[proc,  below=1.8cm of recon]  (comp) {Comparison};
+      \node[human, left=1.2cm of comp]    (hum)  {RA Medication Abstraction};
+      \node[adj,   right=1.2cm of comp]   (adj)  {Adjudication};
 
       % Sources funnel down to reconciliation
-      \draw[arr] (notes.south)  -- ++(0,-0.5) -| (recon.north);
+      \draw[arr] (notes.south)  -- ++(0,-0.6) -| (recon.north);
       \draw[arr] (medrec.south) -- (recon.north);
-      \draw[arr] (parent.south) -- ++(0,-0.5) -| (recon.north);
+      \draw[arr] (parent.south) -- ++(0,-0.6) -| (recon.north);
 
       % Reconciliation down to comparison
       \draw[arr] (recon.south) -- (comp.north);
 
-      % Human REDCap in from left
+      % RA abstraction in from left
       \draw[arr] (hum.east) -- (comp.west);
 
       % Comparison to adjudication
       \draw[arr] (comp.east) -- (adj.west);
-    \end{tikzpicture}%
-    }
+    \end{tikzpicture}
 
     \vspace{0.7em}
     \textbf{Extraction model:} Claude Opus 4.6 via SecureGPT (Stanford's
