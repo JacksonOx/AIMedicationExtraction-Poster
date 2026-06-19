@@ -129,35 +129,47 @@
     \vspace{0.5em}
     \resizebox{\colwidth}{!}{%
     \begin{tikzpicture}[
-      node distance=0.5cm and 1.4cm,
+      node distance=1.2cm and 1.0cm,
       src/.style={draw, rounded corners=5pt, fill=slatecol!15,
-                  text width=3.2cm, align=center,
+                  text width=3.0cm, align=center,
                   minimum height=1.2cm, font=\normalsize},
       proc/.style={draw, rounded corners=5pt, fill=aiteal!20,
-                   text width=2.8cm, align=center,
+                   text width=3.0cm, align=center,
                    minimum height=1.2cm, font=\normalsize},
       human/.style={draw, rounded corners=5pt, fill=humancardinal!15,
                     text width=3.0cm, align=center,
                     minimum height=1.2cm, font=\normalsize},
       adj/.style={draw, rounded corners=5pt, fill=erroramber!20,
-                  text width=2.8cm, align=center,
+                  text width=3.0cm, align=center,
                   minimum height=1.2cm, font=\normalsize},
       arr/.style={-Stealth, thick, color=slatecol}
     ]
-      \node[src]  (notes)  {Epic Clinical Notes};
-      \node[src, below=of notes]  (medrec) {Epic Med Records};
-      \node[src, below=of medrec] (parent) {Parent REDCap};
-      \node[proc, right=1.6cm of medrec] (recon) {Reconcile};
-      \node[proc, right=1.6cm of recon]  (comp)  {Compare};
-      \node[adj,  right=1.6cm of comp]   (adj)   {Adjudication};
-      \node[human, below=0.8cm of comp]  (hum)   {Human REDCap\\(RA Abstraction)};
+      % Row 1: data sources
+      \node[src] (notes)  {Epic Clinical Notes};
+      \node[src, right=1.0cm of notes]  (medrec) {Epic Medications};
+      \node[src, right=1.0cm of medrec] (parent) {Parent Questionnaire};
 
-      \draw[arr] (notes.east)  -- ++(0.5,0) |- (recon.west);
-      \draw[arr] (medrec.east) -- (recon.west);
-      \draw[arr] (parent.east) -- ++(0.5,0) |- (recon.west);
-      \draw[arr] (recon.east)  -- (comp.west);
-      \draw[arr] (hum.north)   -- (comp.south);
-      \draw[arr] (comp.east)   -- (adj.west);
+      % Row 2: reconciliation (centered below middle source)
+      \node[proc, below=1.4cm of medrec] (recon) {Reconciliation};
+
+      % Row 3: human input, comparison, adjudication
+      \node[proc,  below=1.4cm of recon]  (comp) {Comparison};
+      \node[human, left=1.0cm of comp]    (hum)  {Human REDCap\\(RA Abstraction)};
+      \node[adj,   right=1.0cm of comp]   (adj)  {Adjudication};
+
+      % Sources funnel down to reconciliation
+      \draw[arr] (notes.south)  -- ++(0,-0.5) -| (recon.north);
+      \draw[arr] (medrec.south) -- (recon.north);
+      \draw[arr] (parent.south) -- ++(0,-0.5) -| (recon.north);
+
+      % Reconciliation down to comparison
+      \draw[arr] (recon.south) -- (comp.north);
+
+      % Human REDCap in from left
+      \draw[arr] (hum.east) -- (comp.west);
+
+      % Comparison to adjudication
+      \draw[arr] (comp.east) -- (adj.west);
     \end{tikzpicture}%
     }
 
