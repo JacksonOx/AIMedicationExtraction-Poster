@@ -128,38 +128,42 @@
 
     \vspace{0.5em}
     \begin{tikzpicture}[
-      node distance=1.2cm and 1.0cm,
+      node distance=1.4cm and 1.5cm,
       src/.style={draw, rounded corners=8pt, fill=slatecol!15,
-                  text width=7.5cm, align=center,
-                  minimum height=2.8cm, font=\large},
+                  text width=10.5cm, align=center,
+                  minimum height=2.8cm,
+                  font={\large\hyphenpenalty=10000\exhyphenpenalty=10000}},
       proc/.style={draw, rounded corners=8pt, fill=aiteal!20,
-                   text width=7.5cm, align=center,
-                   minimum height=2.8cm, font=\large},
+                   text width=10.5cm, align=center,
+                   minimum height=2.8cm,
+                   font={\large\hyphenpenalty=10000\exhyphenpenalty=10000}},
       human/.style={draw, rounded corners=8pt, fill=humancardinal!15,
-                    text width=7.5cm, align=center,
-                    minimum height=2.8cm, font=\large},
+                    text width=10.5cm, align=center,
+                    minimum height=2.8cm,
+                    font={\large\hyphenpenalty=10000\exhyphenpenalty=10000}},
       adj/.style={draw, rounded corners=8pt, fill=erroramber!20,
-                  text width=7.5cm, align=center,
-                  minimum height=2.8cm, font=\large},
+                  text width=10.5cm, align=center,
+                  minimum height=2.8cm,
+                  font={\large\hyphenpenalty=10000\exhyphenpenalty=10000}},
       arr/.style={-Stealth, very thick, color=slatecol, line width=2pt}
     ]
       % Row 1: data sources
       \node[src] (notes)  {Epic Clinical Notes};
-      \node[src, right=1.2cm of notes]  (medrec) {Epic Medications};
-      \node[src, right=1.2cm of medrec] (parent) {Parent Questionnaire};
+      \node[src, right=1.5cm of notes]  (medrec) {Epic Medications};
+      \node[src, right=1.5cm of medrec] (parent) {Parent Questionnaire};
 
       % Row 2: reconciliation (centered below middle source)
-      \node[proc, below=1.8cm of medrec] (recon) {Reconciliation};
+      \node[proc, below=2.0cm of medrec] (recon) {Reconciliation};
 
       % Row 3: RA abstraction, comparison, adjudication
-      \node[proc,  below=1.8cm of recon]  (comp) {Comparison};
-      \node[human, left=1.2cm of comp]    (hum)  {RA Medication Abstraction};
-      \node[adj,   right=1.2cm of comp]   (adj)  {Adjudication};
+      \node[proc,  below=2.0cm of recon]  (comp) {Comparison};
+      \node[human, left=1.5cm of comp]    (hum)  {RA Medication Abstraction};
+      \node[adj,   right=1.5cm of comp]   (adj)  {Adjudication};
 
       % Sources funnel down to reconciliation
-      \draw[arr] (notes.south)  -- ++(0,-0.6) -| (recon.north);
+      \draw[arr] (notes.south)  -- ++(0,-0.7) -| (recon.north);
       \draw[arr] (medrec.south) -- (recon.north);
-      \draw[arr] (parent.south) -- ++(0,-0.6) -| (recon.north);
+      \draw[arr] (parent.south) -- ++(0,-0.7) -| (recon.north);
 
       % Reconciliation down to comparison
       \draw[arr] (recon.south) -- (comp.north);
