@@ -205,58 +205,38 @@
 \separatorcolumn
 
 % =====================================================================
-% MIDDLE COLUMN
+% MIDDLE COLUMN  (Agreement / Similarity)
 % =====================================================================
 \begin{column}{\colwidth}
 
-  \begin{alertblock}{Key Results at a Glance}
+  \begin{alertblock}{Agreement at a Glance}
     \begin{center}
       \begin{tabular}{lcc}
         \toprule
         \textbf{Metric} & \textbf{Result} & \textbf{(N)} \\
         \midrule
-        Drug presence agreement & \textbf{90.5\%} & (21 drugs) \\
-        Human-only drugs (AI missed)      & \textbf{0}      & \\
-        AI-only Drugs (Human missed)      & \textbf{2}      & \\
-        Start date within 7 days          & \textbf{93.1\%} & (29 matched) \\
-        Stop date within 7 days           & \textbf{89.5\%} & (19 matched) \\
-        Discontinued/Ongoing Agreement                  & \textbf{90.0\%} & (29 matched) \\
-        Discontinuation reason            & \textbf{60.0\%} & (15 matched) \\
+        Drug presence agreement       & \textbf{90.5\%} & (21 drugs) \\
+        Human-only drugs (AI missed)  & \textbf{0}      & \\
+        AI-only drugs (RAs missed)    & \textbf{2}      & \\
+        Episode match                 & \textbf{85.3\%} & (34 episodes) \\
+        Start date within 7 days      & \textbf{93.1\%} & (27/29) \\
+        Stop date within 7 days       & \textbf{89.5\%} & (17/19) \\
+        Status (ongoing/stopped)      & \textbf{90.0\%} & (26/29) \\
+        Discontinuation reason        & \textbf{60.0\%} & (9/15) \\
         \bottomrule
       \end{tabular}
     \end{center}
   \end{alertblock}
 
-  \begin{block}{Agreement: Drug Presence}
-
-\begin{itemize}
-  \item The AI extracted \textbf{21} validated medications, of which
-        \textbf{19 (90.5\%)} were also recorded by the RAs.
-  \item The AI missed \textbf{zero medications} recorded by the RAs, and it captured
-        \textbf{2} additional medications that the RAs did not, one of which was a
-        \textbf{confirmed human omission}.
-\end{itemize}
-
-  \end{block}
-
   \begin{block}{Validated Medications: AI vs.\ Human}
     \begin{center}
-      \includesvg[height=14cm]{fig7_validated_meds_stack}
+      \includesvg[height=13cm]{fig7_validated_meds_stack}
     \end{center}
+    \small The AI recorded every medication the RAs did and \textbf{2} more;
+    one of those was a \textbf{confirmed human omission}.
   \end{block}
 
-  \begin{block}{Agreement: Episode and Field Level}
-
-    \heading{Episode matching}
-
-    29 of 34 episodes (85.3\%) matched. Among matched episodes, start dates
-    agreed within 7 days in \textbf{93\% (27/29)} and stop dates in
-    \textbf{89\% (17/19)}. All stop dates and all but one start date agreed
-    within 30 days; every comparable date fell within the same calendar quarter.
-
-    \vspace{0.7em}
-    \heading{Date concordance}
-
+  \begin{block}{Date and Field Concordance}
     \begin{center}
       \begin{tabular}{lcccc}
         \toprule
@@ -267,39 +247,33 @@
         \bottomrule
       \end{tabular}
     \end{center}
-
-    \vspace{0.5em}
-    Medication status agreed in \textbf{90\% (26/29)}. Discontinuation reason
-    was the weakest field at \textbf{60\% (9/15)}, though adjudication shows
-    most disagreements reflect vocabulary differences or facts absent from the
+    \vspace{0.3em}
+    Among matched episodes, dates converge quickly: every comparable date
+    falls within one calendar quarter. Status agreed in \textbf{90\%}, and
+    discontinuation reason was the only weak field (\textbf{60\%}), where
+    adjudication shows most of the gap is vocabulary or facts absent from the
     AI's inputs, not model error.
-
   \end{block}
 
   \begin{block}{Source-by-Field Concordance (pre-adjudication)}
-
     \begin{center}
       \begin{tabular}{lccc}
         \toprule
         \textbf{Field} & \textbf{S1 Notes} & \textbf{S2 Epic} & \textbf{S3 Parent} \\
         \midrule
-        Start date            & 88\% & \textbf{96\%} & 69\% \\
-        Stop date             & \textbf{81\%} & 69\% & 50\% \\
-        Status                & 93\% & 86\% & \textbf{96\%} \\
-        Discontinuation reason & \textbf{64\%} & 43\% & 36\% \\
+        Start date             & 88\%          & \textbf{96\%} & 69\% \\
+        Stop date              & \textbf{81\%} & 69\%          & 50\% \\
+        Status                 & 93\%          & 86\%          & \textbf{96\%} \\
+        Discontinuation reason & \textbf{64\%} & 43\%          & 36\% \\
         \bottomrule
       \end{tabular}
     \end{center}
-
-    \vspace{0.4em}
-    Validates reconciliation weighting: Epic wins on start and administration
-    dates; clinical notes win on stop dates and reasons; parent report serves
-    as gap-filler and tie-breaker only.
-
+    \vspace{0.3em}
+    Validates the reconciliation weighting: Epic wins start dates, notes win
+    stop dates and reasons, parent report is a gap-filler and tie-breaker only.
   \end{block}
 
 \end{column}
-
 \separatorcolumn
 
 % =====================================================================
