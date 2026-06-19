@@ -169,10 +169,10 @@
       \node[human, left=1.05cm of comp]   (hum)  {RA Medication Abstraction};
       \node[adj,   right=1.05cm of comp]  (adj)  {Adjudication};
 
-      % Sources into SecureGPT — each via its own entry point
-      \draw[arr] (notes.south)  -- ++(0,-0.5) -| (sgpt.west);
+      % Sources into SecureGPT — straight down then 90° into respective side
+      \draw[arr] (notes.south)  |- (sgpt.west);
       \draw[arr] (medrec.south) -- (sgpt.north);
-      \draw[arr] (parent.south) -- ++(0,-0.5) -| (sgpt.east);
+      \draw[arr] (parent.south) |- (sgpt.east);
 
       % SecureGPT <-> Reconciliation (bidirectional)
       \draw[barr] (sgpt.south) -- (recon.north);
