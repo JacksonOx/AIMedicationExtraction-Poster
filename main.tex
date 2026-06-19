@@ -94,32 +94,33 @@
 
   \begin{block}{Background}
 
-    Reconstructing longitudinal medication histories from the electronic health
-    record (EHR) for research relies on \textbf{labor-intensive manual chart
-    abstraction}. Large language models (LLMs) may substantially reduce this
+    Converting unstructured longitudinal medication histories from the EHR into
+    structured research data relies on \textbf{manual chart abstraction}, which
+    is resource-intensive and constrains both retrospective and prospective
+    studies. Increasingly capable large language models (LLMs) may reduce this
     burden, but their reliability against human abstraction is largely
-    unquantified -- particularly in complex pediatric settings.
+    unquantified.
 
     \vspace{0.6em}
-    \textbf{Setting:} The Stanford Children's Immune Behavioral Health (IBH) /
-    PANS clinic manages patients with complex, multi-medication courses spanning
-    psychiatric, DMARD, NSAID, steroid, and infusion therapies -- a demanding
-    extraction target.
+    We evaluated a \textbf{proof-of-concept LLM medication-extraction pipeline}
+    against human chart abstraction in a pediatric immune behavioral health
+    (IBH) setting, reporting agreement and adjudicated accuracy separately.
 
     \vspace{0.6em}
     \textbf{Two research questions (kept strictly separate):}
     \begin{itemize}
-      \item \textbf{Similarity:} How closely do the two methods agree?
-      \item \textbf{Accuracy:} Where they differ, who is right?
+      \item \textbf{Agreement:} How closely do the two methods produce the same output?
+      \item \textbf{Accuracy:} Where they differ, who is correct?
     \end{itemize}
 
   \end{block}
 
   \begin{block}{Methods}
 
-    \textbf{Design:} Single-patient pilot. Inter-method
-    agreement study with manual adjudication. Review window: April 2024 through
-    June 2026.
+    \textbf{Design:} Single-patient pilot using a patient selected as one of
+    the most complex medication-collection cases in the clinic. EHR data were
+    pulled via STARR (Stanford's research extraction tool) from first visit
+    (April 2024) through most recent encounter (June 2026).
 
     \vspace{0.8em}
     \textbf{AI Extraction Pipeline}
@@ -153,30 +154,29 @@
     \end{tikzpicture}
 
     \vspace{0.7em}
-    \textbf{Extraction model:} Claude Opus 4.6 via Stanford Secure GPT
-    (PHI-compliant gateway / AWS Bedrock). Each source extracted independently;
-    reconciled into one AI list (O4) using a confidence-weighted,
-    source-aware model.
+    \textbf{Extraction model:} Claude Opus 4.6 via SecureGPT (Stanford's
+    PHI-compliant institutional gateway). Each source extracted independently;
+    consolidated into one AI list using a confidence-weighted, source-aware
+    reconciliation.
 
     \vspace{0.7em}
-    \textbf{Three comparison layers:}
+    \textbf{Comparator:} Independent human abstraction by IBH clinic research
+    assistants (RAs), compared across three layers:
     \begin{itemize}
-      \item \textbf{Layer A -- Drug presence:} Was each medication captured
-            by both methods?
-      \item \textbf{Layer B -- Episode:} Did each start-to-stop course match?
-      \item \textbf{Layer C -- Field-level:} Start date, stop date, dose,
-            status, and discontinuation reason on matched pairs.
+      \item \textbf{Drug presence:} Was each medication captured by both methods?
+      \item \textbf{Episode:} Did each distinct start-to-stop course match?
+      \item \textbf{Variables:} Start/stop date, status, and discontinuation
+            reason on matched episodes, at multiple date tolerances.
     \end{itemize}
 
     \vspace{0.6em}
-    \textbf{Adjudication:} Each substantive disagreement (contest) was judged
-    against the source chart as AI-correct, human-correct, both-defensible, or
-    both-wrong, with cause classified into six root-cause categories.
+    \textbf{Adjudication:} Substantive disagreements judged by chart review as
+    AI-correct, human-correct, both-defensible, or both-wrong, with cause
+    classified.
 
     \vspace{0.6em}
-    \textbf{Scope:} 21 medications analyzed. Miscellaneous / OTC items not
-    collected by the human team and one after-window DMARD were excluded. All
-    exclusions are documented.
+    \textbf{Scope:} 21 medications analyzed. Medication classes the human
+    workflow does not collect were excluded.
 
   \end{block}
 
@@ -207,13 +207,11 @@
     \end{center}
   \end{alertblock}
 
-  \begin{block}{Similarity: Drug Presence (Layer A)}
+  \begin{block}{Agreement: Drug Presence}
 
-    Of 21 AI-extracted medications, \textbf{19 (90.5\%)} were also captured by
-    the human team. The AI missed \textbf{zero} medications the human team
-    collected. Two AI-only drugs were confirmed real exposures:
-    hydroxyzine (confirmed human omission) and lorazepam (documented dispensing
-    only partially captured by both methods).
+    The AI extracted 21 medications; \textbf{19 (90.5\%)} were also recorded
+    by RAs. The AI missed \textbf{none} the RAs recorded; 2 were captured only
+    by the AI, one a confirmed human omission.
 
     \vspace{0.5em}
     Shared medications by class: 6 psychiatric, 4 NSAID, 4 DMARD, 3 steroid /
@@ -221,34 +219,34 @@
 
   \end{block}
 
-  \begin{block}{Similarity: Episode and Field Agreement (Layers B+C)}
+  \begin{block}{Agreement: Episode and Field Level}
 
-    \heading{Episode matching (Layer B)}
+    \heading{Episode matching}
 
-    29 of 34 episodes (85.3\%) matched across methods. There were 4 AI-only
-    episodes and 1 human-only pre-window trial. Among matched pairs, 8
-    differences were recording-convention disagreements (dose-step granularity
-    or dating style) rather than substantive errors.
+    29 of 34 episodes (85.3\%) matched. Among matched episodes, start dates
+    agreed within 7 days in \textbf{93\% (27/29)} and stop dates in
+    \textbf{89\% (17/19)}. All stop dates and all but one start date agreed
+    within 30 days; every comparable date fell within the same calendar quarter.
 
     \vspace{0.7em}
-    \heading{Date concordance (Layer C)}
+    \heading{Date concordance}
 
     \begin{center}
       \begin{tabular}{lcccc}
         \toprule
         \textbf{Field} & \textbf{Exact} & \textbf{$\leq$7 d} & \textbf{$\leq$30 d} & \textbf{Same Qtr} \\
         \midrule
-        Start date & 69\% & 93.1\% & 96.6\% & 100\% \\
-        Stop date  & 63\% & 89.5\% & 100\%  & 100\% \\
+        Start date & 69\% & 93\% & 96.6\% & 100\% \\
+        Stop date  & 63\% & 89\% & 100\%  & 100\% \\
         \bottomrule
       \end{tabular}
     \end{center}
 
     \vspace{0.5em}
-    Status agreed in 90\% of matched pairs (26/29). Discontinuation reason was
-    the weakest field at 60\% (9/15); adjudication shows most disagreements
-    reflect vocabulary differences or could-not-be-known information rather
-    than model error.
+    Medication status agreed in \textbf{90\% (26/29)}. Discontinuation reason
+    was the weakest field at \textbf{60\% (9/15)}, though adjudication shows
+    most disagreements reflect vocabulary differences or facts absent from the
+    AI's inputs, not model error.
 
   \end{block}
 
@@ -356,42 +354,38 @@
     \begin{center}
       \begin{tabular}{lc}
         \toprule
-        \textbf{Scenario} & \textbf{Estimated cost (1 patient)} \\
+        \textbf{} & \textbf{Estimated cost (1 patient)} \\
         \midrule
-        List-price, uncached (full run) & $\sim$\$28 \\
-        With prompt caching (Bedrock)   & $\sim$\$7--10 \\
-        Human abstraction (skilled labor) & Several hours \\
+        AI compute (this run) & \$10--28 \\
+        RA labor (human abstraction) & $\sim$\$400 \\
         \midrule
-        \textbf{AI vs.\ human cost ratio} & \textbf{5--15$\times$ lower} \\
+        \textbf{Reduction} & \textbf{$>$10$\times$} \\
         \bottomrule
       \end{tabular}
     \end{center}
 
     \vspace{0.3em}
-    Actual token usage is capturable from SecureChatAI session logs (measured,
-    not estimated). Cached estimate requires Bedrock prompt-cache confirmation.
+    Compute cost does not include turnaround-speed advantages. Actual token
+    usage is capturable from SecureGPT session logs.
 
   \end{block}
 
   \begin{block}{Conclusions}
 
     \begin{itemize}
-      \item The LLM pipeline achieved \textbf{high concordance with human
-            abstraction} on drug presence (90.5\%), episode timing, and
+      \item LLM extraction was \textbf{highly concordant} with human abstraction
+            on the structural backbone: drug existence, episode timing, and
             medication status.
-      \item \textbf{The AI missed zero medications} captured by the human
-            team; 2 AI-only drugs were real exposures the human team missed.
-      \item Disagreement concentrated in \textbf{discontinuation reason
-            (60\%)}, but adjudication shows most cases reflect vocabulary
-            differences or input limitations -- not model error.
-      \item \textbf{Low-confidence tags effectively identify} episodes
-            warranting targeted human review (merit-loss 40\% vs.\ 0\% at
-            high confidence).
-      \item AI extraction is estimated to be \textbf{5--15$\times$ cheaper}
-            than human abstraction before accounting for turnaround speed.
-      \item Results are \textbf{descriptive (n=1)} and require multi-patient
-            validation, but support feasibility for scaling with
-            confidence-guided review.
+      \item Disagreement concentrated in \textbf{discontinuation reason (60\%)},
+            largely attributable to input limitations rather than model error;
+            only 1 of 17 disagreements was a genuine AI reasoning error.
+      \item \textbf{Low-confidence flags concentrated genuine errors}, supporting
+            a workflow in which humans review only low-confidence extractions.
+      \item Estimated compute cost was \textbf{\$10--28 vs.\ $\sim$\$400 in RA
+            labor}: a more than tenfold reduction.
+      \item Findings are \textbf{descriptive (n=1)} and require multi-patient
+            validation, but accuracy, cost, and time savings support feasibility
+            for scaling with confidence-guided human review.
     \end{itemize}
 
   \end{block}
