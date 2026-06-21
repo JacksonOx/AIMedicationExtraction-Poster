@@ -41,9 +41,12 @@
 % => 5*0.02 + 4*0.225 = 0.1 + 0.9 = 1.0
 % ====================
 \newlength{\sepwidth}
-\newlength{\colwidth}
+\newlength{\colwide}    % wide first column (Background + Methods)
+\newlength{\colnarrow}  % three narrower result/discussion columns
 \setlength{\sepwidth}{0.02\paperwidth}
-\setlength{\colwidth}{0.225\paperwidth}
+\setlength{\colwide}{0.27\paperwidth}
+\setlength{\colnarrow}{0.21\paperwidth}
+% 5*0.02 + 0.27 + 3*0.21 = 0.10 + 0.27 + 0.63 = 1.0
 
 \newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
 
@@ -80,7 +83,7 @@
 % =====================================================================
 % COLUMN 1 -- BACKGROUND + METHODS
 % =====================================================================
-\begin{column}{\colwidth}
+\begin{column}{\colwide}  
 
   \begin{block}{Background}
 
@@ -129,7 +132,7 @@
     \textbf{AI Extraction and Adjudication Pipeline}
 
     \vspace{0.4em}
-    \scalebox{0.72}{%
+    \scalebox{0.82}{%
     \begin{tikzpicture}[
       node distance=1.4cm and 1.5cm,
       src/.style={draw, rounded corners=6pt, fill=slatecol!15,
@@ -180,7 +183,7 @@
     compared against the AI list across three layers:
 
     \vspace{0.2em}
-    \begin{tabularx}{\colwidth}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X}
+\begin{tabularx}{\colwide}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X}
       \toprule
       \textbf{Drug presence} & \textbf{Start \& stop dates} & \textbf{Discont.\ reason} \\
       \bottomrule
@@ -205,7 +208,7 @@
 % =====================================================================
 % COLUMN 2 -- RESULTS: AGREEMENT
 % =====================================================================
-\begin{column}{\colwidth}
+\begin{column}{\colnarrow}   % COLUMN 2 (Results: Agreement)
 
   \begin{block}{Agreement: Drug Presence}
     \begin{center}{\small
@@ -228,7 +231,7 @@
 
   \begin{block}{Agreement: Dates}
     \begin{center}
-      \includesvg[width=0.95\colwidth]{fig11_date_concordance}
+\includesvg[width=0.95\colnarrow]{fig11_date_concordance}
     \end{center}
     \vspace{0.2em}
     Among matched episodes, dates converge quickly: \textbf{93\%} of start and
@@ -272,7 +275,7 @@
 % =====================================================================
 % COLUMN 3 -- RESULTS: ACCURACY
 % =====================================================================
-\begin{column}{\colwidth}
+\begin{column}{\colnarrow}   % COLUMN 3 (Results: Accuracy)
 
   \begin{block}{Accuracy: Adjudication (17 Contests)}
 
@@ -310,7 +313,7 @@
 
     \vspace{0.3em}
     \begin{center}
-      \includesvg[width=0.95\colwidth]{fig12_discontinuation_reason}
+\includesvg[width=0.95\colnarrow]{fig12_discontinuation_reason}
     \end{center}
     \vspace{0.2em}
     The disagreements are largely the same clinical event in different defensible
@@ -355,7 +358,7 @@
 % =====================================================================
 % COLUMN 4 -- DISCUSSION
 % =====================================================================
-\begin{column}{\colwidth}
+\begin{column}{\colnarrow}   % COLUMN 4 (Discussion)
 
   \begin{block}{Cost Estimate}
 
