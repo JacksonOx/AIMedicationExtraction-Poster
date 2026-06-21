@@ -1,18 +1,18 @@
 % Compile with XeLaTeX
-% (Overleaf: Menu > Settings > Compiler > XeLaTeX)
-
 \documentclass[final]{beamer}
 
 % ====================
 % Packages
 % ====================
-
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[size=custom,width=120,height=72,scale=1.0]{beamerposter}
 \usetheme{gemini}
 \usecolortheme{stanford}
-% Override headline to cardinal red (matches Stanford_CS_Poster_Template_Red)
+% Shrink the header band
+\setbeamerfont{headline title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{headline author}{size=\large}
+\setbeamerfont{headline institute}{size=\small}
 \setbeamercolor{headline}{bg=cardinalred,fg=white}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -27,7 +27,6 @@
 % ====================
 % Stanford palette
 % ====================
-
 \definecolor{aiteal}{HTML}{1F6F7A}
 \definecolor{humancardinal}{HTML}{8C1515}
 \definecolor{bothgreen}{HTML}{4F9D69}
@@ -37,50 +36,39 @@
 \definecolor{lightgrey}{HTML}{9AA5B1}
 
 % ====================
-% Lengths
+% Lengths  (4 columns)
+% (4+1)*\sepwidth + 4*\colwidth = \paperwidth
+% => 5*0.02 + 4*0.225 = 0.1 + 0.9 = 1.0
 % ====================
-
-% 3 columns: (3+1)*\sepwidth + 3*\colwidth = \paperwidth
-% => 4*0.025 + 3*0.3 = 0.1 + 0.9 = 1.0 checkmark
 \newlength{\sepwidth}
 \newlength{\colwidth}
-\setlength{\sepwidth}{0.025\paperwidth}
-\setlength{\colwidth}{0.3\paperwidth}
+\setlength{\sepwidth}{0.02\paperwidth}
+\setlength{\colwidth}{0.225\paperwidth}
 
 \newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
 
 % ====================
 % Title / author / footer
 % ====================
-
 \title{LLM Medication Extraction vs.\ Human Chart Abstraction\\
        in Pediatric Immune Behavioral Health: A Single-Patient Pilot}
-
 \author{Jackson Oxner, B.A.}
-
 \institute[Stanford]{Stanford Children's Immune Behavioral Health (IBH) Clinic}
-
 \footercontent{
   2026 Stanford COMET Research Symposium \hfill
   IBH / PANS Clinic, Stanford Children's Health \hfill
   Stanford University}
-
-% ====================
-% Body
-% ====================
 
 \begin{document}
 
 \addtobeamertemplate{headline}{}
 {
     \begin{tikzpicture}[remember picture,overlay]
-      % Stanford Block S -- top right
       \node [anchor=north east, inner sep=3cm]
         at ([xshift=0.0cm,yshift=2.5cm]current page.north east)
         {\includegraphics[height=7.0cm]{stanford_logos/Block_S_2_color.png}};
-      % Stanford School of Medicine -- top left
       \node [anchor=north west, inner sep=3.5cm]
-        at ([xshift=-0.5cm,yshift=1.5cm]current page.north west)
+        at ([xshift=1.4cm,yshift=2.2cm]current page.north west)
         {\colorbox{white}{\includegraphics[height=5.6cm]{stanford_logos/SM_Web_vert_LG.png}}};
     \end{tikzpicture}
 }
@@ -90,7 +78,7 @@
 \separatorcolumn
 
 % =====================================================================
-% LEFT COLUMN
+% COLUMN 1 -- BACKGROUND + METHODS
 % =====================================================================
 \begin{column}{\colwidth}
 
@@ -113,16 +101,16 @@
 
     \vspace{0.4em}
     \textbf{Key research questions:}
-    \vspace{-0.6em}   % pulls up the top of the itemized research questions
+    \vspace{-0.6em}
     \begin{itemize}
       \item \textbf{Agreement / Alignment:} How often do the two methods
             produce the same result?
       \item \textbf{Accuracy:} Where they differ, which method is correct?
     \end{itemize}
-    \vspace{-0.4em}   % pulls up the bottom of the Background block
+    \vspace{-0.4em}
   \end{block}
 
-  \vspace{-0.6em}     % shrinks the gap before the Methods block
+  \vspace{-0.6em}
   \begin{block}{Methods}
 
     \textbf{Design:} \textbf{Single-patient pilot} in one of the clinic's most
@@ -137,99 +125,76 @@
     comparison.
 
     \vspace{0.2em}
-        \begin{center}
-
+    \begin{center}
     \textbf{AI Extraction and Adjudication Pipeline}
 
     \vspace{0.4em}
-    \scalebox{0.80}{%
+    \scalebox{0.72}{%
     \begin{tikzpicture}[
       node distance=1.4cm and 1.5cm,
       src/.style={draw, rounded corners=6pt, fill=slatecol!15,
-                  text width=9cm, align=center,
-                  minimum height=1.96cm,
+                  text width=9cm, align=center, minimum height=1.96cm,
                   font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       proc/.style={draw, rounded corners=6pt, fill=aiteal!20,
-                   text width=9cm, align=center,
-                   minimum height=1.96cm,
+                   text width=9cm, align=center, minimum height=1.96cm,
                    font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       gpt/.style={draw, rounded corners=6pt, fill=darkcyan!20,
-                  text width=9cm, align=center,
-                  minimum height=1.96cm,
+                  text width=9cm, align=center, minimum height=1.96cm,
                   font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       human/.style={draw, rounded corners=6pt, fill=humancardinal!15,
-                    text width=9cm, align=center,
-                    minimum height=1.96cm,
+                    text width=9cm, align=center, minimum height=1.96cm,
                     font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       adj/.style={draw, rounded corners=6pt, fill=erroramber!20,
-                  text width=9cm, align=center,
-                  minimum height=1.96cm,
+                  text width=9cm, align=center, minimum height=1.96cm,
                   font={\normalsize\hyphenpenalty=10000\exhyphenpenalty=10000}},
       arr/.style={-Stealth, very thick, color=slatecol, line width=1.5pt},
       barr/.style={Stealth-Stealth, very thick, color=slatecol, line width=1.5pt}
     ]
-      % Row 1: data sources
       \node[src] (notes)  {Epic Clinical Notes};
       \node[src, right=1.05cm of notes]  (medrec) {Epic Medications};
       \node[src, right=1.05cm of medrec] (parent) {Parent Questionnaire};
-
-      % Row 2: SecureGPT (PHI-compliant gateway)
       \node[gpt, below=1.4cm of medrec] (sgpt) {SecureGPT};
-
-      % Row 3: reconciliation
       \node[proc, below=1.4cm of sgpt] (recon) {Reconciliation};
-
-      % Row 4: RA abstraction, comparison, adjudication
       \node[proc,  below=1.4cm of recon]  (comp) {Comparison};
       \node[human, left=1.05cm of comp]   (hum)  {RA Abstraction};
       \node[adj,   right=1.05cm of comp]  (adj)  {Adjudication};
-
-      % Sources into SecureGPT — straight down then 90° into respective side
       \draw[arr] (notes.south)  |- (sgpt.west);
       \draw[arr] (medrec.south) -- (sgpt.north);
       \draw[arr] (parent.south) |- (sgpt.east);
-
-      % SecureGPT <-> Reconciliation (bidirectional)
       \draw[barr] (sgpt.south) -- (recon.north);
-
-      % Reconciliation down to comparison
       \draw[arr] (recon.south) -- (comp.north);
-
-      % RA abstraction in from left
       \draw[arr] (hum.east) -- (comp.west);
-
-      % Comparison to adjudication
       \draw[arr] (comp.east) -- (adj.west);
     \end{tikzpicture}%
     }
     \end{center}
 
     \vspace{0.6em}
-    \textbf{Extraction/Reconciliation:} Each source was extracted
-    independently by Claude Opus 4.6 via SecureGPT (Stanford's
-    PHI-compliant institutional gateway), then consolidated into a single AI list using a
-    confidence-weighted, source-reliability-aware reconciliation.
+    \textbf{Extraction/Reconciliation:} Each source was extracted independently
+    by Claude Opus 4.6 via SecureGPT (Stanford's PHI-compliant institutional
+    gateway), then consolidated into a single AI list using a confidence-weighted,
+    source-reliability-aware reconciliation.
 
-\vspace{0.6em}
+    \vspace{0.6em}
     \textbf{Comparison:} Independent manual abstraction by the same RAs,
     compared against the AI list across three layers:
 
     \vspace{0.2em}
     \begin{tabularx}{\colwidth}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X}
       \toprule
-      \textbf{Drug presence} & \textbf{Course start \& stop dates} & \textbf{Discontinuation reason} \\
+      \textbf{Drug presence} & \textbf{Start \& stop dates} & \textbf{Discont.\ reason} \\
       \bottomrule
     \end{tabularx}
-    
+
     \vspace{0.6em}
     \textbf{Adjudication:} Substantive disagreements were judged by chart review
     as AI-correct, human-correct, both-defensible, or both-wrong, with the cause
     of each classified.
 
     \vspace{0.6em}
-\textbf{Scope:} Across the sources and time frame the AI screened for \textbf{126 distinct
-    medications} spanning the clinic's six tracked classes: DMARDs, antibiotics,
-    psychiatric medications, IVIG, NSAIDs, and steroids.
+    \textbf{Scope:} Across the sources and time frame the AI screened for
+    \textbf{126 distinct medications} spanning the clinic's six tracked classes:
+    DMARDs, antibiotics, psychiatric medications, IVIG, NSAIDs, and steroids.
 
   \end{block}
 
@@ -238,198 +203,191 @@
 \separatorcolumn
 
 % =====================================================================
-% MIDDLE COLUMN  (Results: Agreement / Alignment)
-% Logical order: drug presence -> dates -> field values -> source weighting
+% COLUMN 2 -- RESULTS: AGREEMENT
 % =====================================================================
 \begin{column}{\colwidth}
 
-  % ============================================================
-  % 1. DRUG PRESENCE  (did both methods find the same drugs?)
-  % ============================================================
-  
   \begin{block}{Agreement: Drug Presence}
-
-  \noindent
-  \hspace*{0.05\colwidth}%
-  \begin{minipage}[t]{0.50\colwidth}
-    \vspace{0pt}%
-    \begin{tabular}{lc}
-      \toprule
-      \textbf{Drug presence} & \textbf{Medications} \\
-      \midrule
-      Extracted by AI         & 21 \\
-      Shared (AI + human)     & \textbf{19 (90.5\%)} \\
-      Human-only (AI missed)  & \textbf{0} \\
-      AI-only                 & \textbf{2} \\
-      \bottomrule
-    \end{tabular}
-  \end{minipage}%
-  \begin{minipage}[t]{0.40\colwidth}
-    \vspace{0pt}%
+    \begin{center}{\small
+      \begin{tabular}{lc}
+        \toprule
+        \textbf{Drug presence} & \textbf{Meds} \\
+        \midrule
+        Extracted by AI         & 21 \\
+        Shared (AI + human)     & \textbf{19 (90.5\%)} \\
+        Human-only (AI missed)  & \textbf{0} \\
+        AI-only                 & \textbf{2} \\
+        \bottomrule
+      \end{tabular}}
+    \end{center}
+    \vspace{0.2em}
     Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by
-    both methods. The LLM  \textbf{did not miss any} medications recorded by the RAs and captured
-    \textbf{two additional} validated medications.
-  \end{minipage}
+    both methods. The LLM \textbf{did not miss any} medication the RAs recorded
+    and captured \textbf{two additional} validated medications.
+  \end{block}
 
-\end{block}
-
-  % ============================================================
-  % 2. DATES  (do the start/stop timings line up?)
-  % ============================================================
   \begin{block}{Agreement: Dates}
     \begin{center}
-      \includesvg[width=0.85\colwidth]{fig11_date_concordance}
+      \includesvg[width=0.95\colwidth]{fig11_date_concordance}
     \end{center}
     \vspace{0.2em}
     Among matched episodes, dates converge quickly: \textbf{93\%} of start and
-    \textbf{89\%} of stop dates agree within 7 days, and functionally every date fell within thirty days.
+    \textbf{89\%} of stop dates agree within 7 days, and functionally every date
+    fell within thirty days.
   \end{block}
 
-\begin{block}{Agreement: Status, Sources, and Confidence}
+  \begin{block}{Agreement: Status and Sources}
 
-  \textbf{Status.}
-  Medication status (ongoing vs.\ stopped) agreed in \textbf{90\% (26/29)}.
+    \textbf{Status.}
+    Medication status (ongoing vs.\ stopped) agreed in \textbf{90\% (26/29)}.
 
-  \vspace{0.6em}
-  \textbf{Source reliability by field.}
-  Each source's concordance with the human abstraction varied by field, which is
-  what the confidence-weighted, source-aware reconciliation exploits:
+    \vspace{0.5em}
+    \textbf{Source reliability by field.}
+    Concordance with the human varied by field, which the source-aware
+    reconciliation exploits:
 
- \vspace{0.3em}
-  \begin{center}
-    \begin{tabular}{lcc}
-      \toprule
-      \textbf{Field} & \textbf{Most reliable source (agreement)} & \textbf{Avg.\ (3 sources)} \\
-      \midrule
-      Start date             & Epic Meds (\textbf{96\%})            & 84\% \\
-      Stop date              & Clinical Notes (\textbf{81\%})       & 67\% \\
-      Status                 & Parent Questionnaire (\textbf{96\%}) & 92\% \\
-      Discontinuation reason & Clinical Notes (\textbf{64\%})       & 48\% \\
-      \bottomrule
-    \end{tabular}
-  \end{center}
+    \vspace{0.2em}
+    \begin{center}{\small
+      \begin{tabular}{lcc}
+        \toprule
+        \textbf{Field} & \textbf{Best source (agree)} & \textbf{Avg.} \\
+        \midrule
+        Start date & Epic (\textbf{96\%})   & 84\% \\
+        Stop date  & Notes (\textbf{81\%})  & 67\% \\
+        Status     & Parent (\textbf{96\%}) & 92\% \\
+        Reason     & Notes (\textbf{64\%})  & 48\% \\
+        \bottomrule
+      \end{tabular}}
+    \end{center}
+    \vspace{0.2em}
+    Each field has a clear best source, which the reconciliation weights
+    accordingly.
 
-  \vspace{0.3em}
-  Each field has a clear best source, which the reconciliation weights
-  accordingly.
+  \end{block}
 
-  \vspace{0.7em}
-  \textbf{Confidence calibration.}
-  The AI's self-reported confidence tracks its agreement with the human, so
-  disagreement concentrates in the flagged, low-confidence extractions:
-
-  \vspace{0.2em}
-  \begin{center}
-    \begin{tabular}{lc}
-      \toprule
-      \textbf{AI confidence} & \textbf{Concordance with human} \\
-      \midrule
-      High   & \textbf{92\%} \\
-      Medium & 89\% \\
-      Low    & \textbf{50\%} \\
-      \bottomrule
-    \end{tabular}
-  \end{center}
-
-  \vspace{0.2em}
-  Review is therefore easy to target: scrutinize the low-confidence extractions
-  and trust the rest.
-
-\end{block}
 \end{column}
+
 \separatorcolumn
 
 % =====================================================================
-% RIGHT COLUMN
+% COLUMN 3 -- RESULTS: ACCURACY
 % =====================================================================
 \begin{column}{\colwidth}
 
-  \begin{block}{Accuracy: Adjudication of 17 Contests}
+  \begin{block}{Accuracy: Adjudication (17 Contests)}
 
-    \begin{center}
-      \begin{tabular}{lcc}
+    \begin{center}{\small
+      \begin{tabular}{lcl}
         \toprule
-        \textbf{Outcome} & \textbf{N} & \textbf{Notes} \\
+        \textbf{Outcome} & \textbf{N} & \textbf{Note} \\
         \midrule
-        AI correct     & 5 & Incl.\ 2 confirmed human omissions \\
-        Human correct  & 2 & Incl.\ 1 genuine AI reasoning error \\
-        Both defensible & 6 & Clinical judgment ties \\
-        Not enough info & 3 & Could not be known from AI inputs \\
-        Both wrong      & 1 & Lorazepam episode \\
+        AI correct      & 5 & 2 human omissions \\
+        Human correct   & 2 & 1 true AI error \\
+        Both defensible & 6 & judgment ties \\
+        Not enough info & 3 & unknowable \\
+        Both wrong      & 1 & lorazepam \\
         \midrule
-        \textbf{AI win rate (decided)} & \textbf{5/7 (71.4\%)} & \\
-        Severity-weighted score       & AI 11 vs.\ human 5 & (68.75\%) \\
-        \textbf{Genuine AI errors}    & \textbf{1/17 (5.9\%)} & \\
+        \textbf{AI win rate} & \textbf{5/7} & \textbf{71.4\% of decided} \\
+        Severity-weighted    & 11:5 & 68.75\% \\
+        \textbf{Genuine AI error} & \textbf{1/17} & \textbf{5.9\%} \\
         \bottomrule
-      \end{tabular}
+      \end{tabular}}
     \end{center}
-
-    \vspace{0.7em}
-    \heading{Root-cause attribution (17 contests)}
-
-    \begin{center}
-      \begin{tabular}{lc}
-        \toprule
-        \textbf{Category} & \textbf{N} \\
-        \midrule
-        AI correct, human missed or wrong & 5 \\
-        Input / pipeline data unavailable (STARR) & 5 \\
-        Both defensible (clinical judgment) & 3 \\
-        AI correct, outside human scope / timing & 2 \\
-        Clinician-only knowledge & 1 \\
-        Genuine AI reasoning error & 1 \\
-        \bottomrule
-      \end{tabular}
-    \end{center}
-
-  \end{block}
-
-  \begin{block}{Confidence vs.\ Validated Accuracy}
-
-    Each contest was tagged with the AI episode's reconciliation confidence
-    (high / medium / low). \textbf{Merit-loss rate} = (human beats it + both
-    wrong) / total, excluding could-not-be-known ties.
 
     \vspace{0.5em}
-    \begin{center}
-      \begin{tabular}{lcccc}
-        \toprule
-        \textbf{Confidence} & \textbf{N} & \textbf{AI correct} & \textbf{Human beats it} & \textbf{Merit-loss} \\
-        \midrule
-        High   & 6 & 2 & 0 & \textbf{0\%}  \\
-        Medium & 5 & 2 & 1 & \textbf{20\%} \\
-        Low    & 5 & 1 & 1 & \textbf{40\%} \\
-        \bottomrule
-      \end{tabular}
-    \end{center}
-
-    \vspace{0.4em}
-    High confidence never lost on the merits (its 3 non-AI-correct outcomes
-    were all could-not-be-known). The single genuine reasoning error sat at
-    medium, indicating the model under-discriminates at the top. The
-    \textbf{low-confidence tag is a reliable verify signal} for targeted human
-    review.
+    \textbf{Root causes:} the AI was correct where the human missed or erred (5)
+    or where the item lay outside human scope or timing (2); 5 stemmed from input
+    or pipeline data unavailable in STARR; 3 were defensible clinical-judgment
+    ties; 1 required clinician-only knowledge; only \textbf{1} was a genuine AI
+    reasoning error.
 
   \end{block}
+
+  \begin{block}{Accuracy: Discontinuation Reason}
+
+    Discontinuation reason was the weakest field, agreeing in \textbf{60\% (9/15)}.
+    Adjudication shows most of that gap is \emph{not} model error:
+
+    \vspace{0.3em}
+    \begin{center}
+      \includesvg[width=0.95\colwidth]{fig12_discontinuation_reason}
+    \end{center}
+    \vspace{0.2em}
+    The disagreements are largely the same clinical event in different defensible
+    vocabulary, or facts absent from the AI's inputs (such as an insurance-driven
+    stop); only \textbf{one of 15} was a genuine AI mistake.
+
+  \end{block}
+
+  \begin{block}{Confidence Calibration}
+
+    The AI's self-reported confidence tracks both its agreement with the human
+    and its adjudicated accuracy:
+
+    \vspace{0.3em}
+    \begin{center}{\small
+      \begin{tabular}{lcc}
+        \toprule
+        \textbf{AI confidence} & \textbf{Agreement} & \textbf{Merit-loss} \\
+        \midrule
+        High   & 92\%          & \textbf{0\%}  \\
+        Medium & 89\%          & \textbf{20\%} \\
+        Low    & \textbf{50\%} & \textbf{40\%} \\
+        \bottomrule
+      \end{tabular}}
+    \end{center}
+    \vspace{0.2em}
+    {\small Agreement = concordance with the human; merit-loss = (human wins +
+    both wrong) / contests at that level.}
+
+    \vspace{0.3em}
+    As confidence falls, agreement drops and merit-loss rises. High-confidence
+    extractions never lost on the merits; the single genuine reasoning error sat
+    at medium. \textbf{Low confidence is a reliable verify signal}: review the
+    low-confidence extractions and trust the rest.
+
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+% =====================================================================
+% COLUMN 4 -- DISCUSSION
+% =====================================================================
+\begin{column}{\colwidth}
 
   \begin{block}{Cost Estimate}
 
     \begin{center}
       \begin{tabular}{lc}
         \toprule
-        \textbf{} & \textbf{Estimated cost (1 patient)} \\
+         & \textbf{Cost (1 patient)} \\
         \midrule
-        AI compute (this run) & \$10--28 \\
-        RA labor (human abstraction) & $\sim$\$400 \\
+        AI compute (this run)  & \$10--28 \\
+        RA labor (abstraction) & $\sim$\$400 \\
         \midrule
-        \textbf{Reduction} & \textbf{$>$10$\times$} \\
+        \textbf{Reduction}     & \textbf{$>$10$\times$} \\
         \bottomrule
       \end{tabular}
     \end{center}
-
     \vspace{0.3em}
-    Compute cost does not include turnaround-speed advantages. Actual token
-    usage is capturable from SecureGPT session logs.
+    Compute excludes turnaround-speed gains; actual token usage is recoverable
+    from SecureGPT session logs.
+
+  \end{block}
+
+  \begin{block}{Limitations}
+
+    \begin{itemize}
+      \item \textbf{Single patient (n=1)}: one complex case, one clinic, one
+            model; descriptive only and not yet generalizable.
+      \item Requires \textbf{multi-patient, multi-clinician validation}.
+      \item 3 of 17 contests were \textbf{unresolvable} from available inputs,
+            bounding adjudication.
+      \item Cost is a \textbf{list-price estimate}; actual token cost is
+            recoverable from SecureGPT logs.
+    \end{itemize}
 
   \end{block}
 
@@ -437,18 +395,15 @@
 
     \begin{itemize}
       \item LLM extraction was \textbf{highly concordant} with human abstraction
-            on the structural backbone: drug existence, episode timing, and
-            medication status.
-      \item Disagreement concentrated in \textbf{discontinuation reason (60\%)},
-            largely attributable to input limitations rather than model error;
-            only 1 of 17 disagreements was a genuine AI reasoning error.
-      \item \textbf{Low-confidence flags concentrated genuine errors}, supporting
-            a workflow in which humans review only low-confidence extractions.
-      \item Estimated compute cost was \textbf{\$10--28 vs.\ $\sim$\$400 in RA
-            labor}: a more than tenfold reduction.
-      \item Findings are \textbf{descriptive (n=1)} and require multi-patient
-            validation, but accuracy, cost, and time savings support feasibility
-            for scaling with confidence-guided human review.
+            on the structural backbone: drug presence, episode timing, and status.
+      \item Disagreement localized to \textbf{discontinuation reason}, largely
+            input limitations rather than model error (only 1 of 17 a genuine AI
+            error).
+      \item \textbf{Low-confidence flags concentrate errors}, enabling a workflow
+            where humans review only low-confidence extractions.
+      \item With a more than \textbf{tenfold cost reduction}, results support
+            \textbf{feasibility for scaling} with confidence-guided review,
+            pending validation.
     \end{itemize}
 
   \end{block}
