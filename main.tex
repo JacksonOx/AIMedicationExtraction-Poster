@@ -285,21 +285,57 @@
     \textbf{89\%} of stop dates agree within 7 days, and functionally every date fell within thirty days.
   \end{block}
 
-  % ============================================================
-  % 3. FIELD VALUES: STATUS AND DISCONTINUATION REASON
-  % ============================================================
-  \begin{block}{Agreement: Status and Discontinuation Reason}
-    Medication status (ongoing vs.\ stopped) agreed in \textbf{90\%}.
-    Discontinuation reason was the only weak field at \textbf{60\% (9/15)}.
-    \begin{center}
-      \includesvg[width=0.95\colwidth]{fig12_discontinuation_reason}
-    \end{center}
-    \vspace{0.2em}
-    Adjudication shows most of that gap is \emph{not} model error: the
-    disagreements are largely the same clinical event in different defensible
-    vocabulary, or facts absent from the AI's inputs (such as an
-    insurance-driven stop). Only \textbf{one} reason was a genuine AI mistake.
-  \end{block}
+\begin{block}{Agreement: Status, Sources, and Confidence}
+
+  \textbf{Status.}
+  Medication status (ongoing vs.\ stopped) agreed in \textbf{90\% (26/29)}.
+
+  \vspace{0.6em}
+  \textbf{Source reliability by field.}
+  Each source's concordance with the human abstraction varied by field, which is
+  what the confidence-weighted, source-aware reconciliation exploits:
+
+ \vspace{0.3em}
+  \begin{center}
+    \begin{tabular}{lcc}
+      \toprule
+      \textbf{Field} & \textbf{Most reliable source (agreement)} & \textbf{Avg.\ (3 sources)} \\
+      \midrule
+      Start date             & Epic Meds (\textbf{96\%})            & 84\% \\
+      Stop date              & Clinical Notes (\textbf{81\%})       & 67\% \\
+      Status                 & Parent Questionnaire (\textbf{96\%}) & 92\% \\
+      Discontinuation reason & Clinical Notes (\textbf{64\%})       & 48\% \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \vspace{0.3em}
+  Each field has a clear best source, which the reconciliation weights
+  accordingly.
+
+  \vspace{0.7em}
+  \textbf{Confidence calibration.}
+  The AI's self-reported confidence tracks its agreement with the human, so
+  disagreement concentrates in the flagged, low-confidence extractions:
+
+  \vspace{0.2em}
+  \begin{center}
+    \begin{tabular}{lc}
+      \toprule
+      \textbf{AI confidence} & \textbf{Concordance with human} \\
+      \midrule
+      High   & \textbf{92\%} \\
+      Medium & 89\% \\
+      Low    & \textbf{50\%} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \vspace{0.2em}
+  Review is therefore easy to target: scrutinize the low-confidence extractions
+  and trust the rest.
+
+\end{block}
 \end{column}
 \separatorcolumn
 
