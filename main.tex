@@ -22,6 +22,7 @@
 \pgfplotsset{compat=1.17}
 \usepackage{xcolor}
 \usepackage{svg}
+\usepackage{tabularx}
 
 % ====================
 % Stanford palette
@@ -96,38 +97,52 @@
   \begin{block}{Background}
 
     Converting unstructured longitudinal medication histories from the EHR into
-    structured research data relies on \textbf{manual chart abstraction}, which
-    is resource-intensive and constrains both retrospective and prospective
-    studies. Increasingly capable large language models (LLMs) may reduce this
-    burden, but their reliability against human abstraction is largely
-    unquantified.
+    structured research data relies on \textbf{manual chart abstraction}, a
+    resource-intensive process that constrains retrospective and prospective
+    studies alike and limits how readily these data can inform clinical
+    decision-making. Increasingly capable large language models (LLMs) may
+    reduce this burden, but their reliability against human abstraction remains
+    largely unquantified.
 
-    \vspace{0.6em}
+    \vspace{0.4em}
     We evaluated a \textbf{proof-of-concept LLM medication-extraction pipeline}
-    against human chart abstraction in a pediatric immune behavioral health
-    (IBH) setting, reporting agreement and adjudicated accuracy separately.
+    against human chart abstraction in pediatric immune behavioral health
+    (IBH), a setting where patients carry long, frequently revised medication
+    histories that make abstraction especially demanding. We report agreement
+    and adjudicated accuracy separately.
 
-    \vspace{0.6em}
-    \textbf{Two research questions (kept strictly separate):}
+    \vspace{0.4em}
+    \textbf{Key research questions:}
+    \vspace{-0.6em}   % pulls up the top of the itemized research questions
     \begin{itemize}
-      \item \textbf{Agreement/Alignment:} How closely do the two methods produce the same output?
-      \item \textbf{Accuracy:} Where they differ, who is correct?
+      \item \textbf{Agreement / Alignment:} How often do the two methods
+            produce the same result?
+      \item \textbf{Accuracy:} Where they differ, which method is correct?
     \end{itemize}
-
+    \vspace{-0.4em}   % pulls up the bottom of the Background block
   \end{block}
 
+  \vspace{-0.6em}     % shrinks the gap before the Methods block
   \begin{block}{Methods}
 
-    \textbf{Design:} Single-patient pilot using a patient selected as one of
-    the most complex medication-collection cases in the clinic. EHR data were
-    pulled via STARR (Stanford's research extraction tool) from first visit
-    (April 2024) through most recent encounter (June 2026).
+    \textbf{Design:} \textbf{Single-patient pilot} in one of the clinic's most
+    complex medication-collection cases. EHR and REDCap data spanning the
+    patient's first visit (April 2024) through their most recent encounter
+    (June 2026) were extracted via STARR (Stanford's research extraction tool)
+    and manual CSV download, yielding \textbf{280 clinical notes} from a range
+    of Stanford clinics, \textbf{39 patient-questionnaire responses}, and
+    \textbf{313 Epic medication entries}. These \textbf{same source materials}
+    were given to both the AI pipeline and the IBH clinic research assistants
+    (RAs) who manually abstracted the medications, ensuring an equal-information
+    comparison.
 
-    \vspace{0.8em}
+    \vspace{0.2em}
+        \begin{center}
+
     \textbf{AI Extraction and Adjudication Pipeline}
 
-    \vspace{0.5em}
-    \begin{center}
+    \vspace{0.4em}
+    \scalebox{0.80}{%
     \begin{tikzpicture}[
       node distance=1.4cm and 1.5cm,
       src/.style={draw, rounded corners=6pt, fill=slatecol!15,
@@ -166,7 +181,7 @@
 
       % Row 4: RA abstraction, comparison, adjudication
       \node[proc,  below=1.4cm of recon]  (comp) {Comparison};
-      \node[human, left=1.05cm of comp]   (hum)  {RA Medication Abstraction};
+      \node[human, left=1.05cm of comp]   (hum)  {RA Abstraction};
       \node[adj,   right=1.05cm of comp]  (adj)  {Adjudication};
 
       % Sources into SecureGPT — straight down then 90° into respective side
@@ -185,32 +200,36 @@
 
       % Comparison to adjudication
       \draw[arr] (comp.east) -- (adj.west);
-    \end{tikzpicture}
+    \end{tikzpicture}%
+    }
     \end{center}
 
-    \vspace{0.7em}
-    \textbf{Extraction model:} Claude Opus 4.6 via SecureGPT (Stanford's
-    PHI-compliant institutional gateway). Each source extracted independently;
-    consolidated into one AI list using a confidence-weighted, source-aware
-    reconciliation.
+    \vspace{0.6em}
+    \textbf{Extraction/Reconciliation:} Each source was extracted
+    independently by Claude Opus 4.6 via SecureGPT (Stanford's
+    PHI-compliant institutional gateway), then consolidated into a single AI list using a
+    confidence-weighted, source-reliability-aware reconciliation.
 
-    \vspace{0.7em}
-    \textbf{Comparator:} Independent human abstraction by IBH clinic research
-    assistants (RAs), compared across three layers:
-    \begin{itemize}
-      \item \textbf{Drug Presence}
-      \item \textbf{Course Start and Stop Dates}
-      \item \textbf{Discontinuation Reason}
-    \end{itemize}
+\vspace{0.6em}
+    \textbf{Comparison:} Independent manual abstraction by the same RAs,
+    compared against the AI list across three layers:
+
+    \vspace{0.2em}
+    \begin{tabularx}{\colwidth}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X}
+      \toprule
+      \textbf{Drug presence} & \textbf{Course start \& stop dates} & \textbf{Discontinuation reason} \\
+      \bottomrule
+    \end{tabularx}
+    
+    \vspace{0.6em}
+    \textbf{Adjudication:} Substantive disagreements were judged by chart review
+    as AI-correct, human-correct, both-defensible, or both-wrong, with the cause
+    of each classified.
 
     \vspace{0.6em}
-    \textbf{Adjudication:} Substantive disagreements judged by chart review as
-    AI-correct, human-correct, both-defensible, or both-wrong, with cause
-    classified.
-
-    \vspace{0.6em}
-    \textbf{Scope:} For one particularly medical complex patient the AI screened for 126 distinct medications across all
-    tracked classes. 
+\textbf{Scope:} Across the sources and time frame the AI screened for \textbf{126 distinct
+    medications} spanning the clinic's six tracked classes: DMARDs, antibiotics,
+    psychiatric medications, IVIG, NSAIDs, and steroids.
 
   \end{block}
 
@@ -227,30 +246,43 @@
   % ============================================================
   % 1. DRUG PRESENCE  (did both methods find the same drugs?)
   % ============================================================
+  
   \begin{block}{Agreement: Drug Presence}
-    \noindent
-    \begin{minipage}[c]{0.65\linewidth}
-      \includesvg[height=27cm]{fig7_validated_meds_stack}
-    \end{minipage}%
-    \hfill
-    \begin{minipage}[c]{0.32\linewidth}
-      Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded
-      by both methods. The AI missed \textbf{none} the RAs recorded and captured
-      \textbf{2} more, one a \textbf{confirmed human omission}.
-    \end{minipage}
-  \end{block}
+
+  \noindent
+  \hspace*{0.05\colwidth}%
+  \begin{minipage}[t]{0.50\colwidth}
+    \vspace{0pt}%
+    \begin{tabular}{lc}
+      \toprule
+      \textbf{Drug presence} & \textbf{Medications} \\
+      \midrule
+      Extracted by AI         & 21 \\
+      Shared (AI + human)     & \textbf{19 (90.5\%)} \\
+      Human-only (AI missed)  & \textbf{0} \\
+      AI-only                 & \textbf{2} \\
+      \bottomrule
+    \end{tabular}
+  \end{minipage}%
+  \begin{minipage}[t]{0.40\colwidth}
+    \vspace{0pt}%
+    Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by
+    both methods. The LLM  \textbf{did not miss any} medications recorded by the RAs and captured
+    \textbf{two additional} validated medications.
+  \end{minipage}
+
+\end{block}
 
   % ============================================================
   % 2. DATES  (do the start/stop timings line up?)
   % ============================================================
   \begin{block}{Agreement: Dates}
     \begin{center}
-      \includesvg[width=0.98\colwidth]{fig11_date_concordance}
+      \includesvg[width=0.85\colwidth]{fig11_date_concordance}
     \end{center}
     \vspace{0.2em}
     Among matched episodes, dates converge quickly: \textbf{93\%} of start and
-    \textbf{89\%} of stop dates agree within 7 days, and every comparable date
-    falls within the same calendar quarter.
+    \textbf{89\%} of stop dates agree within 7 days, and functionally every date fell within thirty days.
   \end{block}
 
   % ============================================================
@@ -268,28 +300,6 @@
     vocabulary, or facts absent from the AI's inputs (such as an
     insurance-driven stop). Only \textbf{one} reason was a genuine AI mistake.
   \end{block}
-
-  % ============================================================
-  % 4. SOURCE-BY-FIELD  (which input source is most reliable; validates weighting)
-  % ============================================================
-  \begin{block}{Source-by-Field Concordance (pre-adjudication)}
-    \begin{center}
-      \begin{tabular}{lccc}
-        \toprule
-        \textbf{Field} & \textbf{S1 Notes} & \textbf{S2 Epic} & \textbf{S3 Parent} \\
-        \midrule
-        Start date             & 88\%          & \textbf{96\%} & 69\% \\
-        Stop date              & \textbf{81\%} & 69\%          & 50\% \\
-        Status                 & 93\%          & 86\%          & \textbf{96\%} \\
-        Discontinuation reason & \textbf{64\%} & 43\%          & 36\% \\
-        \bottomrule
-      \end{tabular}
-    \end{center}
-    \vspace{0.3em}
-    Validates the reconciliation weighting: Epic wins start dates, notes win
-    stop dates and reasons, parent report is a gap-filler and tie-breaker only.
-  \end{block}
-
 \end{column}
 \separatorcolumn
 
