@@ -300,50 +300,31 @@
 \end{block}
 
 \begin{block}{Accuracy: Discontinuation Reason}
-  Discontinuation reason was the weakest field, agreeing in \textbf{60\% (9/15)}.
-  All \textbf{six} disagreements were adjudicated, and only one was a genuine
-  model error:
-
   \vspace{0.3em}
   \begin{center}
     \includesvg[width=0.95\colnarrow]{fig12_discontinuation_reason}
   \end{center}
-
-  \vspace{0.2em}
-  Three were defensible framings of the same clinical event (ibuprofen 2024,
-  leflunomide, adalimumab), one was an insurance-driven stop documented only in
-  patient messages the AI never received, and one was an AI win where
-  the AI's reason was judged to be more accurate than the human's. Critically only \textbf{one} was a genuine AI error (olanzapine).
+    Discontinuation reason was the weakest field, agreeing in \textbf{60\% (9/15)}.
+But once all \textbf{six} disagreements were adjudicated, only one was a
+genuine AI error: three were defensible framings of the same event, one AI
+answer was judged more accurate than the RA's, and one could not have been
+determined by the AI because the reasoning lived in patient messages it was
+never given.
 \end{block}
 
-  \begin{block}{Confidence Calibration}
+ \begin{block}{Confidence Calibration}
+  The AI's own confidence predicts its accuracy:
 
-    The AI's self-reported confidence tracks both its agreement with the human
-    and its adjudicated accuracy:
+  \vspace{0.4em}
+  \begin{center}
+    \includesvg[width=0.95\colnarrow]{fig_confidence_calibration}
+  \end{center}
 
-    \vspace{0.3em}
-    \begin{center}{\small
-      \begin{tabular}{lcc}
-        \toprule
-        \textbf{AI confidence} & \textbf{Agreement} & \textbf{Merit-loss} \\
-        \midrule
-        High   & 92\%          & \textbf{0\%}  \\
-        Medium & 89\%          & \textbf{20\%} \\
-        Low    & \textbf{50\%} & \textbf{40\%} \\
-        \bottomrule
-      \end{tabular}}
-    \end{center}
-    \vspace{0.2em}
-    {\small Agreement = concordance with the human; merit-loss = (human wins +
-    both wrong) / contests at that level.}
-
-    \vspace{0.3em}
-    As confidence falls, agreement drops and merit-loss rises. High-confidence
-    extractions never lost on the merits; the single genuine reasoning error sat
-    at medium. \textbf{Low confidence is a reliable verify signal}: review the
-    low-confidence extractions and trust the rest.
-
-  \end{block}
+  \vspace{0.3em}
+  The LLM's confidence is well calibrated to its accuracy as high-confidence
+  answers never lost in adjudication.
+  \textbf{Thus, low confidence is a reliable signal for verification.}
+\end{block}
 
 \end{column}
 
