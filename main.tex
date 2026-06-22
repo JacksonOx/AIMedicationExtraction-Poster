@@ -205,11 +205,11 @@
 \begin{column}{\colnarrow}   % COLUMN 2 (Results: Agreement)
 
   \begin{block}{Agreement: Presence and Status}
-  \vspace{-0.8cm}
+  \vspace{-0.2cm}
   \begin{center}
     \includesvg[width=1\colnarrow]{fig_presence_status}
   \end{center}
-  \vspace{-2.0cm}
+  \vspace{-1.0cm}
   Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by
   both methods. The LLM \textbf{did not miss any} medication the RAs recorded
   and captured \textbf{two additional} validated medications. Medication status
@@ -217,26 +217,29 @@
 \end{block}
 
   \begin{block}{Agreement: Dates}
-   \vspace{-0.4cm}
+   \vspace{0.4cm}
     \begin{center}
 \includesvg[width=1\colnarrow]{fig11_date_concordance}
     \end{center}
-    \vspace{0.2em}
+    \vspace{0.4em}
     Among matched episodes, dates converge quickly: \textbf{93\%} of start and
     \textbf{89\%} of stop dates agree within 7 days, and functionally every date
     fell within thirty days.
   \end{block}
 
   \begin{block}{Agreement: Sources}
-\textbf{Source reliability by field:} Each field had a clear best source,
-lifting agreement well above the 3-source average:
- \vspace{-0.8cm}
+\textbf{Source reliability by field:} Each field had a clear best source (named
+below it), lifting agreement well above the 3-source average:
     \begin{center}
-    \includesvg[width=0.98\colnarrow]{fig_source_reliability}
+    \vspace{-0.4cm}
+    \includesvg[width=1\colnarrow]{fig_source_reliability}
     \end{center}
-Source choice measurably affects agreement, yet this reconciliation applied
-fixed, estimated weights. Empirically derived weights, adapted per patient with
-larger samples, could improve future accuracy.
+    \vspace{0.4cm}
+Notably, the strongest source differs by field: structured Epic data wins for
+start dates, clinical notes for stop dates and reasons, and parent report for
+status. Source choice measurably affects agreement, yet this reconciliation
+applied fixed, estimated weights. Empirically derived weights, adapted per
+patient with larger samples, could improve future accuracy.
 \end{block}
 
 \end{column}
@@ -262,17 +265,21 @@ larger samples, could improve future accuracy.
     \end{tabular}
   \end{center}
   \vspace{0.3em}
-  \textbf{Root causes:} the AI was correct where the human missed or erred (5)
-  or where the item lay outside human scope or timing (2); 5 stemmed from input
-  or pipeline data unavailable in STARR; 3 were defensible clinical-judgment
-  ties; 1 required clinician-only knowledge; only \textbf{1} was a genuine AI
-  reasoning error.
+\textbf{Who was correct:} AI in \textbf{5}, human in \textbf{2}, both defensible
+in \textbf{6}, not resolvable from available inputs in \textbf{3}, and both
+wrong in \textbf{1}.
+
+\textbf{Why they differed:} most disagreements were not model error: \textbf{6}
+were defensible clinical-judgment ties and \textbf{3} could not be determined
+from the data given to the AI (STARR omissions or clinician-only knowledge). Of
+the rest, the AI was correct in \textbf{5} (human error/omission) and the human in \textbf{2}; only \textbf{1} was a
+genuine AI reasoning error.
 \end{block}
 
 \begin{block}{Accuracy: Discontinuation Reason}
   \vspace{0.3em}
   \begin{center}
-    \includesvg[width=0.85\colnarrow]{fig12_discontinuation_reason}
+    \includesvg[width=1\colnarrow]{fig12_discontinuation_reason}
   \end{center}
 Discontinuation reason was the weakest field for agreement at \textbf{60\%
 (9/15)}. But when all \textbf{six} disagreements were adjudicated, only one was
@@ -283,6 +290,7 @@ never given.
 \end{block}
 
  \begin{block}{Confidence Calibration}
+   \vspace{-0.6em}
   \begin{center}
     \includesvg[width=0.95\colnarrow]{fig_confidence_calibration}
   \end{center}
@@ -361,14 +369,13 @@ was low-confidence, and no high- or medium-confidence answer lost on review.
 
 \begin{block}{References}
   \footnotesize
+\vspace{-0.6em}
+
   \begin{thebibliography}{9}
     \bibitem{ntinopoulos2025}
-      Ntinopoulos V, et al. Large language models for data extraction from
-      unstructured and semi-structured electronic health records. 2025.
+     Ntinopoulos V, Rodriguez Cetina Biefer H, Tudorache I, et al. Large language models for data extraction from unstructured and semi-structured electronic health records: a multiple model performance evaluation. BMJ Health Care Inform. 2025;32(1):e101139. doi:10.1136/bmjhci-2024-101139
     \bibitem{shao2026}
-      Shao C, et al. Scalable medication extraction and discontinuation
-      identification from electronic health records using large language
-      models. 2026.
+      Shao C, Snyder D, Li C, et al. Scalable medication extraction and discontinuation identification from electronic health records using large language models. Journal of Clinical Epidemiology. 2026;189:112049. doi:10.1016/j.jclinepi.2025.112049
   \end{thebibliography}
 \end{block}
 
