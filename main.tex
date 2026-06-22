@@ -282,7 +282,6 @@
   \begin{center}
     \includesvg[width=0.98\colnarrow]{fig13_adjudication_donut}
   \end{center}
-  \vspace{0.3em}
   \begin{center}
     \begin{tabular}{cc}
       \toprule
@@ -300,21 +299,21 @@
   reasoning error.
 \end{block}
 
-  \begin{block}{Accuracy: Discontinuation Reason}
+\begin{block}{Accuracy: Discontinuation Reason}
+  Discontinuation reason was the weakest field, agreeing in \textbf{60\% (9/15)}.
+  All \textbf{six} disagreements were adjudicated, and only one was model error:
 
-    Discontinuation reason was the weakest field, agreeing in \textbf{60\% (9/15)}.
-    Adjudication shows most of that gap is \emph{not} model error:
+  \vspace{0.3em}
+  \begin{center}
+    \includesvg[width=0.95\colnarrow]{fig12_discontinuation_reason}
+  \end{center}
 
-    \vspace{0.3em}
-    \begin{center}
-\includesvg[width=0.95\colnarrow]{fig12_discontinuation_reason}
-    \end{center}
-    \vspace{0.2em}
-    The disagreements are largely the same clinical event in different defensible
-    vocabulary, or facts absent from the AI's inputs (such as an insurance-driven
-    stop); only \textbf{one of 15} was a genuine AI mistake.
-
-  \end{block}
+  \vspace{0.2em}
+  Three were defensible framings of the same clinical event (ibuprofen,
+  leflunomide, adalimumab), one was an insurance-driven stop documented only in
+  patient messages the AI never received (IVIG), and one was an AI win
+  (aripiprazole). Just \textbf{one} was a genuine AI error (olanzapine).
+\end{block}
 
   \begin{block}{Confidence Calibration}
 
