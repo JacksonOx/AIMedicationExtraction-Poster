@@ -253,7 +253,7 @@
     \begin{center}{\small
       \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcc}
         \toprule
-        \textbf{Field} & \textbf{Best source (agree)} & \textbf{Avg.} \\
+        \textbf{Data Field} & \textbf{Best Source (agreement)} & \textbf{Avg. of 3 Sources} \\
         \midrule
         Start date & Epic Meds (\textbf{96\%})        & 84\% \\
         Stop date  & Clinical Notes (\textbf{81\%})   & 67\% \\
@@ -278,34 +278,27 @@
 % =====================================================================
 \begin{column}{\colnarrow}   % COLUMN 3 (Results: Accuracy)
 
-  \begin{block}{Accuracy: Adjudication (17 Contests)}
-
-    \begin{center}{\small
-      \begin{tabular}{lcl}
-        \toprule
-        \textbf{Outcome} & \textbf{N} & \textbf{Note} \\
-        \midrule
-        AI correct      & 5 & 2 human omissions \\
-        Human correct   & 2 & 1 true AI error \\
-        Both defensible & 6 & judgment ties \\
-        Not enough info & 3 & unknowable \\
-        Both wrong      & 1 & lorazepam \\
-        \midrule
-        \textbf{AI win rate} & \textbf{5/7} & \textbf{71.4\% of decided} \\
-        Severity-weighted    & 11:5 & 68.75\% \\
-        \textbf{Genuine AI error} & \textbf{1/17} & \textbf{5.9\%} \\
-        \bottomrule
-      \end{tabular}}
-    \end{center}
-
-    \vspace{0.5em}
-    \textbf{Root causes:} the AI was correct where the human missed or erred (5)
-    or where the item lay outside human scope or timing (2); 5 stemmed from input
-    or pipeline data unavailable in STARR; 3 were defensible clinical-judgment
-    ties; 1 required clinician-only knowledge; only \textbf{1} was a genuine AI
-    reasoning error.
-
-  \end{block}
+ \begin{block}{Accuracy: Adjudication (17 Contests)}
+  \begin{center}
+    \includesvg[width=0.98\colnarrow]{fig13_adjudication_donut}
+  \end{center}
+  \vspace{0.3em}
+  \begin{center}
+    \begin{tabular}{cc}
+      \toprule
+      \textbf{AI win rate} & \textbf{Genuine AI error} \\
+      \midrule
+      5/7 (71.4\%) & 1/17 (5.9\%) \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vspace{0.3em}
+  \textbf{Root causes:} the AI was correct where the human missed or erred (5)
+  or where the item lay outside human scope or timing (2); 5 stemmed from input
+  or pipeline data unavailable in STARR; 3 were defensible clinical-judgment
+  ties; 1 required clinician-only knowledge; only \textbf{1} was a genuine AI
+  reasoning error.
+\end{block}
 
   \begin{block}{Accuracy: Discontinuation Reason}
 
