@@ -206,15 +206,16 @@
 % =====================================================================
 \begin{column}{\colnarrow}   % COLUMN 2 (Results: Agreement)
 
-  \begin{block}{Agreement: Drug Presence}
-    \begin{center}
-  \includesvg[width=1\colnarrow]{fig_drug_presence}
-\end{center}
-\vspace{0.2em}
-Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by both
-methods. The LLM \textbf{did not miss any} medication the RAs recorded and
-captured \textbf{two additional} validated medications.
-  \end{block}
+  \begin{block}{Agreement: Presence and Status}
+  \begin{center}
+    \includesvg[width=1\colnarrow]{fig_presence_status}
+  \end{center}
+  \vspace{0.2em}
+  Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by
+  both methods. The LLM \textbf{did not miss any} medication the RAs recorded
+  and captured \textbf{two additional} validated medications. Medication status
+  (ongoing vs.\ stopped) agreed in \textbf{90\% (26/29)}.
+\end{block}
 
   \begin{block}{Agreement: Dates}
     \begin{center}
@@ -226,19 +227,12 @@ captured \textbf{two additional} validated medications.
     fell within thirty days.
   \end{block}
 
-  \begin{block}{Agreement: Status and Sources}
-\textbf{Status:} Medication status (ongoing vs.\ stopped) agreed in
-\textbf{90\% (26/29)}.
-
+  \begin{block}{Agreement: Sources}
 \textbf{Source reliability by field:} Each field had a clear best source,
 lifting agreement well above the 3-source average:
-
-    \vspace{0.3em}
     \begin{center}
       \includesvg[width=0.98\colnarrow]{fig_source_reliability}
     \end{center}
-
-    \vspace{0.3em}
 Source choice measurably affects agreement, yet this reconciliation applied
 fixed, estimated weights. Empirically derived weights, adapted per patient with
 larger samples, could improve future accuracy.
