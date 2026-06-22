@@ -112,7 +112,7 @@
   \vspace{-0.6em}
   \begin{block}{Methods}
 
-    \textbf{Design:} A \textbf{Single-patient pilot} on one of the clinic's most
+    \textbf{Design:} A \textbf{single-patient pilot} on one of the clinic's most
     complex medication-collection cases. We extracted all Epic and REDCap data from the
     patient's first visit (4/2024) through their most recent encounter
     (6/2026) via STARR (Stanford's research extraction tool)
@@ -179,13 +179,13 @@
     \vspace{0.2em}
 \begin{tabularx}{\colwide}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X}
       \toprule
-      \textbf{Drug Presence} & \textbf{Start/Stop Dates} & \textbf{Discontinuation\ reason} \\
+      \textbf{Drug Presence} & \textbf{Start/Stop Dates} & \textbf{Discontinuation Reason} \\
       \bottomrule
     \end{tabularx}
 
     \vspace{0.4em}
     \textbf{Adjudication:} Substantive disagreements were judged by human chart review
-    as \textbf{AI-correct, human-correct, both-defensible, or both-wrong, with the cause
+    as \textbf{LLM-correct, human-correct, both-defensible, or both-wrong, with the cause
     of each classified.}
 
     \vspace{0.4em}
@@ -256,15 +256,15 @@ patient with larger samples, could improve future accuracy.
   \begin{center}
     \includesvg[width=1\colnarrow]{fig13_adjudication_donut}
   \end{center}
-\textbf{Who was correct:} AI in \textbf{5}, human in \textbf{2}, both defensible
+\textbf{Who was correct:} LLM in \textbf{5}, human in \textbf{2}, both defensible
 in \textbf{6}, not resolvable from available inputs in \textbf{3}, and both
 wrong in \textbf{1}.
 
 \textbf{Why they differed:} most disagreements were not model error: \textbf{6}
 were defensible clinical-judgment ties and \textbf{3} could not be determined
-from the data given to the AI (STARR omissions or clinician-only knowledge). Of
-the rest, the AI was correct in \textbf{5} (human error/omission) and the human in \textbf{2}; only \textbf{1} was a
-genuine AI reasoning error.
+from the data given to the LLM (STARR omissions or clinician-only knowledge). Of
+the rest, the LLM was correct in \textbf{5} (human error/omission) and the human in \textbf{2}; only \textbf{1} was a
+genuine LLM reasoning error.
 \end{block}
 
 \begin{block}{Accuracy: Discontinuation Reason}
@@ -274,9 +274,9 @@ genuine AI reasoning error.
   \end{center}
 Discontinuation reason was the weakest field for agreement at \textbf{60\%
 (9/15)}. But when all \textbf{six} disagreements were adjudicated, only one was
-a genuine AI error: three were defensible framings of the same event, one AI
+a genuine LLM error: three were defensible framings of the same event, one LLM
 answer was judged more accurate than the RA's, and one could not have been
-determined by the AI because the reasoning lived in patient messages it was
+determined by the LLM because the reasoning lived in patient messages it was
 never given.
 \end{block}
 
@@ -308,7 +308,7 @@ was low-confidence, and no high- or medium-confidence answer lost on review.
         \toprule
          & \textbf{Cost (1 patient)} \\
         \midrule
-        AI compute (this run)  & \$10--28 \\
+        LLM compute (this run) & \$10--28 \\
         RA labor (abstraction) & $\sim$\$400 \\
         \midrule
         \textbf{Reduction}     & \textbf{$>$10$\times$} \\
@@ -338,7 +338,7 @@ was low-confidence, and no high- or medium-confidence answer lost on review.
     \item LLM extraction was \textbf{highly aligned} with human abstraction on the
       structural backbone: drug presence, episode timing, and status.
 \item Disagreement localized to \textbf{discontinuation reason}, driven largely
-      by input limitations rather than model error (only 1 of 17 a genuine AI
+      by input limitations rather than model error (only 1 of 17 a genuine LLM
       error).
 \item Low-confidence flags concentrate errors, enabling a \textbf{triage
       workflow} in which RA's review only low-confidence extractions,
