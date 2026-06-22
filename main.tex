@@ -167,7 +167,7 @@
     }
     \end{center}
 
-    \vspace{0.4em}
+    \vspace{0.8em}
     \textbf{Extraction/Reconciliation:} Each source was extracted independently
     by Claude Opus 4.6 via SecureGPT (Stanford's PHI-compliant institutional
     gateway), then consolidated into a single list by the LLM through a reconciliation process that weighted source confidence and reliability. 
@@ -183,9 +183,9 @@
       \bottomrule
     \end{tabularx}
 
-    \vspace{0.4em}
+    \vspace{0.8em}
     \textbf{Adjudication:} Substantive disagreements were judged by human chart review
-    as \textbf{LLM-correct, human-correct, both-defensible, or both-wrong, with the cause
+    as \textit{LLM-correct, human-correct, both-defensible, or both-wrong, with the cause
     of each classified.}
 
     \vspace{0.4em}
@@ -217,7 +217,7 @@
 \end{block}
 
   \begin{block}{Agreement: Dates}
-   \vspace{0.4cm}
+   \vspace{0.8cm}
     \begin{center}
 \includesvg[width=1\colnarrow]{fig11_date_concordance}
     \end{center}
@@ -228,13 +228,14 @@
   \end{block}
 
   \begin{block}{Agreement: Sources}
+  \vspace{0.8em}
 \textbf{Source reliability by field:} Each field had a clear best source (named
 below it), lifting agreement well above the 3-source average:
     \begin{center}
-    \vspace{-0.4cm}
+    \vspace{-0.2cm}
     \includesvg[width=1\colnarrow]{fig_source_reliability}
     \end{center}
-    \vspace{0.4cm}
+    \vspace{0.6cm}
 Notably, the strongest source differs by field: structured Epic data wins for
 start dates, clinical notes for stop dates and reasons, and parent report for
 status. Source choice measurably affects agreement, yet this reconciliation
