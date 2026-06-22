@@ -112,20 +112,19 @@
   \vspace{-0.6em}
   \begin{block}{Methods}
 
-    \textbf{Design:} \textbf{Single-patient pilot} in one of the clinic's most
-    complex medication-collection cases. EHR and REDCap data spanning the
-    patient's first visit (April 2024) through their most recent encounter
-    (June 2026) were extracted via STARR (Stanford's research extraction tool)
+    \textbf{Design:} A \textbf{Single-patient pilot} on one of the clinic's most
+    complex medication-collection cases. We extracted all Epic and REDCap data from the
+    patient's first visit (4/2024) through their most recent encounter
+    (6/2026) via STARR (Stanford's research extraction tool)
     and manual CSV download, yielding \textbf{280 clinical notes} from a range
     of Stanford clinics, \textbf{39 patient-questionnaire responses}, and
     \textbf{313 Epic medication entries}. These \textbf{same source materials}
-    were given to both the AI pipeline and the IBH clinic research assistants
-    (RAs) who manually abstracted the medications, ensuring an equal-information
-    comparison.
+    were available to both the LLM pipeline and the IBH clinic research assistants
+    (RAs) who manually abstracted the medications.
 
     \vspace{0.2em}
     \begin{center}
-    \textbf{AI Extraction and Adjudication Pipeline}
+    \textbf{LLM Extraction and Adjudication Pipeline}
 
     \vspace{0.4em}
     \scalebox{0.82}{%
@@ -168,15 +167,14 @@
     }
     \end{center}
 
-    \vspace{0.6em}
+    \vspace{0.4em}
     \textbf{Extraction/Reconciliation:} Each source was extracted independently
     by Claude Opus 4.6 via SecureGPT (Stanford's PHI-compliant institutional
-    gateway), then consolidated into a single AI list using a confidence-weighted,
-    source-reliability-aware reconciliation.
+    gateway), then consolidated into a single list by the LLM through a reconciliation process that weighted source confidence and reliability. 
 
-    \vspace{0.6em}
+    \vspace{0.4em}
     \textbf{Comparison:} Independent manual abstraction by the same RAs,
-    compared against the AI list across three layers:
+    compared against the LLM list across three layers:
 
     \vspace{0.2em}
 \begin{tabularx}{\colwide}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X}
@@ -185,15 +183,15 @@
       \bottomrule
     \end{tabularx}
 
-    \vspace{0.6em}
-    \textbf{Adjudication:} Substantive disagreements were judged by chart review
-    as AI-correct, human-correct, both-defensible, or both-wrong, with the cause
-    of each classified.
+    \vspace{0.4em}
+    \textbf{Adjudication:} Substantive disagreements were judged by human chart review
+    as \textbf{AI-correct, human-correct, both-defensible, or both-wrong, with the cause
+    of each classified.}
 
-    \vspace{0.6em}
-    \textbf{Scope:} Across the sources and time frame the AI screened for
-    \textbf{126 distinct medications} spanning the clinic's six tracked classes:
-    DMARDs, antibiotics, psychiatric medications, IVIG, NSAIDs, and steroids.
+    \vspace{0.4em}
+    \textbf{Scope:} Between 4/2024 and 6/2026, the LLM screened for
+    \textbf{126 distinct medications} across \textbf{six classes}:
+    \textit{DMARDs, antibiotics, psychotropics, IVIG, NSAIDs, and steroids}.
 
   \end{block}
 
