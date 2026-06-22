@@ -86,22 +86,20 @@
 \begin{column}{\colwide}  
 
   \begin{block}{Background}
-
     Converting unstructured longitudinal medication histories from the EHR into
     structured research data relies on \textbf{manual chart abstraction}, a
-    resource-intensive process that constrains retrospective and prospective
-    studies alike and limits how readily these data can inform clinical
-    decision-making. Increasingly capable large language models (LLMs) may
-    reduce this burden, but their reliability against human abstraction remains
-    largely unquantified.
-
+    resource-intensive and error-prone process \cite{ntinopoulos2025} that
+    constrains retrospective and prospective studies alike and limits how
+    readily these data can inform clinical decision-making. Increasingly capable
+    large language models (LLMs) may reduce this burden \cite{ntinopoulos2025,shao2026},
+    but their reliability against human abstraction, especially for medication
+    discontinuation, remains largely unquantified \cite{shao2026}.
     \vspace{0.4em}
     We evaluated a \textbf{proof-of-concept LLM medication-extraction pipeline}
     against human chart abstraction in pediatric immune behavioral health
     (IBH), a setting where patients carry long, frequently revised medication
     histories that make abstraction especially demanding. We report agreement
     and adjudicated accuracy separately.
-
     \vspace{0.4em}
     \textbf{Key research questions:}
     \vspace{-0.6em}
@@ -355,43 +353,53 @@ never given.
 
   \begin{block}{Limitations}
 
-    \begin{itemize}
-      \item \textbf{Single patient (n=1)}: one complex case, one clinic, one
-            model; descriptive only and not yet generalizable.
-      \item Requires \textbf{multi-patient, multi-clinician validation}.
-      \item 3 of 17 contests were \textbf{unresolvable} from available inputs,
-            bounding adjudication.
-      \item \textbf{Token limits required multi-shot prompting}: SecureGPT's
-            128K input / 4,096 output token ceiling meant large source documents
-            had to be split across multiple prompts, which may affect consistency
-            and model performance relative to a single-context extraction.
-      \item Cost is a \textbf{list-price estimate}; actual token cost is
-            recoverable from SecureGPT logs.
-    \end{itemize}
+  \begin{itemize}
+  \item \textbf{Single patient (n=1)}: one complex case, one clinic, one model;
+        descriptive only, pending multi-patient, multi-clinician validation.
+  \item \textbf{Token ceiling forced multi-shot prompting}: SecureGPT's
+        128K-input / 4,096-output limit split large source documents across
+        prompts, which may affect consistency versus single-context extraction.
+  \item Cost is a \textbf{list-price estimate}; actual token cost is recoverable
+        from SecureGPT logs.
+\end{itemize}
 
   \end{block}
 
-  \begin{block}{Conclusions}
+ \begin{block}{Conclusions}
+  \begin{itemize}
+    \item LLM extraction was \textbf{highly aligned} with human abstraction on the
+      structural backbone: drug presence, episode timing, and status.
+\item Disagreement localized to \textbf{discontinuation reason}, driven largely
+      by input limitations rather than model error (only 1 of 17 a genuine AI
+      error).
+\item Low-confidence flags concentrate errors, enabling a \textbf{triage
+      workflow} in which RA's review only low-confidence extractions,
+      focusing expert effort where the model is least certain.
+\item A more than \textbf{tenfold cost reduction} supports feasibility for
+      scaling with confidence-guided review.
+\item Per-field source-reliability patterns motivate \textbf{multi-patient
+      validation}, letting reconciliation weights adapt per patient rather than
+      relying on a fixed source hierarchy.
+\item These single-patient results establish \textbf{feasibility and an error
+      profile}, not generalizable performance.
+\item \textbf{Future directions:} machine-learning pre-extraction data
+      cleaning; agentic and zero-shot extraction workflows; and dynamic
+      source-reliability re-weighting to strengthen reconciliation.
+  \end{itemize}
+\end{block}
 
-    \begin{itemize}
-      \item LLM extraction was \textbf{highly concordant} with human abstraction
-            on the structural backbone: drug presence, episode timing, and status.
-      \item Disagreement localized to \textbf{discontinuation reason}, largely
-            input limitations rather than model error (only 1 of 17 a genuine AI
-            error).
-      \item \textbf{Low-confidence flags concentrate errors}, enabling a workflow
-            where humans review only low-confidence extractions.
-      \item With a more than \textbf{tenfold cost reduction}, results support
-            \textbf{feasibility for scaling} with confidence-guided review,
-            pending validation.
-    \end{itemize}
-
-  \end{block}
-
-  \begin{block}{References}
-    \nocite{*}
-    \footnotesize{\bibliographystyle{plain}\bibliography{poster}}
-  \end{block}
+\begin{block}{References}
+  \footnotesize
+  \begin{thebibliography}{9}
+    \bibitem{ntinopoulos2025}
+      Ntinopoulos V, et al. Large language models for data extraction from
+      unstructured and semi-structured electronic health records. 2025.
+    \bibitem{shao2026}
+      Shao C, et al. Scalable medication extraction and discontinuation
+      identification from electronic health records using large language
+      models. 2026.
+  \end{thebibliography}
+\end{block}
 
 \end{column}
 
