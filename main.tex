@@ -207,22 +207,13 @@
 \begin{column}{\colnarrow}   % COLUMN 2 (Results: Agreement)
 
   \begin{block}{Agreement: Drug Presence}
-    \begin{center}{\small
-      \begin{tabular}{lc}
-        \toprule
-        \textbf{Drug presence} & \textbf{Meds} \\
-        \midrule
-        Extracted by AI         & 21 \\
-        Shared (AI + human)     & \textbf{19 (90.5\%)} \\
-        Human-only (AI missed)  & \textbf{0} \\
-        AI-only                 & \textbf{2} \\
-        \bottomrule
-      \end{tabular}}
-    \end{center}
-    \vspace{0.2em}
-    Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by
-    both methods. The LLM \textbf{did not miss any} medication the RAs recorded
-    and captured \textbf{two additional} validated medications.
+    \begin{center}
+  \includesvg[width=0.98\colnarrow]{fig_drug_presence}
+\end{center}
+\vspace{0.2em}
+Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by both
+methods. The LLM \textbf{did not miss any} medication the RAs recorded and
+captured \textbf{two additional} validated medications.
   \end{block}
 
   \begin{block}{Agreement: Dates}
