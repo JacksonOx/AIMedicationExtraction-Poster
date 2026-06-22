@@ -208,7 +208,7 @@
 
   \begin{block}{Agreement: Drug Presence}
     \begin{center}
-  \includesvg[width=0.98\colnarrow]{fig_drug_presence}
+  \includesvg[width=1\colnarrow]{fig_drug_presence}
 \end{center}
 \vspace{0.2em}
 Of \textbf{21} validated medications, \textbf{19 (90.5\%)} were recorded by both
@@ -227,32 +227,22 @@ captured \textbf{two additional} validated medications.
   \end{block}
 
   \begin{block}{Agreement: Status and Sources}
+\textbf{Status:} Medication status (ongoing vs.\ stopped) agreed in
+\textbf{90\% (26/29)}.
 
-    \textbf{Status:} Medication status (ongoing vs.\ stopped) agreed in \textbf{90\% (26/29)}.
+\textbf{Source reliability by field:} Each field had a clear best source,
+lifting agreement well above the 3-source average:
 
-    \vspace{0.5em}
-    \textbf{Source reliability by field.}
-    Concordance with the human varied by field:
-
-    \vspace{0.2em}
-    \begin{center}{\small
-      \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcc}
-        \toprule
-        \textbf{Data Field} & \textbf{Best Source (agreement)} & \textbf{Avg. of 3 Sources} \\
-        \midrule
-        Start date & Epic Meds (\textbf{96\%})        & 84\% \\
-        Stop date  & Clinical Notes (\textbf{81\%})   & 67\% \\
-        Status     & Parent Reporting (\textbf{96\%}) & 92\% \\
-        Reason     & Clinical Notes (\textbf{64\%})   & 48\% \\
-        \bottomrule
-      \end{tabular*}}
+    \vspace{0.3em}
+    \begin{center}
+      \includesvg[width=0.98\colnarrow]{fig_source_reliability}
     \end{center}
-    \vspace{0.2em}
-    Each field has a clear best source in this patient, though weights likely
-    vary across patients. Multi-patient data will allow these reliability
-    patterns to inform a more dynamic, patient-aware reconciliation step.
 
-  \end{block}
+    \vspace{0.3em}
+Source choice measurably affects agreement, yet this reconciliation applied
+fixed, estimated weights. Empirically derived weights, adapted per patient with
+larger samples, could improve future accuracy.
+\end{block}
 
 \end{column}
 
@@ -287,11 +277,11 @@ captured \textbf{two additional} validated medications.
 \begin{block}{Accuracy: Discontinuation Reason}
   \vspace{0.3em}
   \begin{center}
-    \includesvg[width=0.95\colnarrow]{fig12_discontinuation_reason}
+    \includesvg[width=0.85\colnarrow]{fig12_discontinuation_reason}
   \end{center}
-    Discontinuation reason was the weakest field, agreeing in \textbf{60\% (9/15)}.
-But once all \textbf{six} disagreements were adjudicated, only one was a
-genuine AI error: three were defensible framings of the same event, one AI
+Discontinuation reason was the weakest field for agreement at \textbf{60\%
+(9/15)}. But when all \textbf{six} disagreements were adjudicated, only one was
+a genuine AI error: three were defensible framings of the same event, one AI
 answer was judged more accurate than the RA's, and one could not have been
 determined by the AI because the reasoning lived in patient messages it was
 never given.
@@ -299,7 +289,7 @@ never given.
 
  \begin{block}{Confidence Calibration}
   \begin{center}
-    \includesvg[width=0.90\colnarrow]{fig_confidence_calibration}
+    \includesvg[width=0.95\colnarrow]{fig_confidence_calibration}
   \end{center}
 
   \vspace{0.2em}
