@@ -363,6 +363,10 @@ never given.
       \item Requires \textbf{multi-patient, multi-clinician validation}.
       \item 3 of 17 contests were \textbf{unresolvable} from available inputs,
             bounding adjudication.
+      \item \textbf{Token limits required multi-shot prompting}: SecureGPT's
+            128K input / 4,096 output token ceiling meant large source documents
+            had to be split across multiple prompts, which may affect consistency
+            and model performance relative to a single-context extraction.
       \item Cost is a \textbf{list-price estimate}; actual token cost is
             recoverable from SecureGPT logs.
     \end{itemize}
