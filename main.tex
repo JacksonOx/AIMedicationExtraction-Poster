@@ -252,10 +252,10 @@ patient with larger samples, could improve future accuracy.
 \begin{column}{\colnarrow}   % COLUMN 3 (Results: Accuracy)
 
  \begin{block}{Accuracy: Adjudication (17 Contests)}
+  \vspace{-0.67em}
   \begin{center}
-    \includesvg[width=0.98\colnarrow]{fig13_adjudication_donut}
+    \includesvg[width=1\colnarrow]{fig13_adjudication_donut}
   \end{center}
-  \vspace{0.3em}
 \textbf{Who was correct:} AI in \textbf{5}, human in \textbf{2}, both defensible
 in \textbf{6}, not resolvable from available inputs in \textbf{3}, and both
 wrong in \textbf{1}.
@@ -315,10 +315,8 @@ was low-confidence, and no high- or medium-confidence answer lost on review.
         \bottomrule
       \end{tabular}
     \end{center}
-    \vspace{0.3em}
-    Compute excludes turnaround-speed gains; actual token usage is recoverable
-    from SecureGPT session logs.
-
+    \vspace{0.1em}
+    Compute excludes \textbf{turnaround-speed gains} (3 hr vs. 12 hr); token usage and cost were estimated from input size, with \textbf{$\sim$95\% of cost} coming from processing the clinical notes.
   \end{block}
 
   \begin{block}{Limitations}
@@ -332,7 +330,7 @@ was low-confidence, and no high- or medium-confidence answer lost on review.
   \item Cost is a \textbf{list-price estimate}; actual token cost is recoverable
         from SecureGPT logs.
 \end{itemize}
-
+\vspace{-0.6em}
   \end{block}
 
  \begin{block}{Conclusions}
@@ -356,6 +354,7 @@ was low-confidence, and no high- or medium-confidence answer lost on review.
       cleaning; agentic and zero-shot extraction workflows; and dynamic
       source-reliability re-weighting to strengthen reconciliation.
   \end{itemize}
+  \vspace{-0.6em}
 \end{block}
 
 \begin{block}{References}
